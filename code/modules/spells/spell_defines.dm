@@ -1,16 +1,150 @@
-// Constants for glow color used in spells 
+// Constants for glow color used in spells
 #define GLOW_COLOR_FIRE "#FF4500" // Red
 #define GLOW_COLOR_ICE "#87CEEB" // Cyan
-#define GLOW_COLOR_LIGHTNING "#FFFF00" // Yellow
+#define GLOW_COLOR_LIGHTNING "#FFD700" // Warm gold-yellow
 #define GLOW_COLOR_BUFF "#A0E65C" // Green
 #define GLOW_COLOR_VAMPIRIC "#8B0000" // Dark Red
-#define GLOW_COLOR_METAL "#808080" // Gray
+#define GLOW_COLOR_METAL "#B0B8C8" // Silver-steel
+#define GLOW_COLOR_EARTHEN "#8B6914" // Brown, for earthen / stone spells
 #define GLOW_COLOR_DISPLACEMENT "#9400D3" // Purple, for generic displacement / CC spells
-#define GLOW_COLOR_ARCANE "#6495ED" // Light Blue, for generic arcane spells
+#define GLOW_COLOR_ARCANE "#7878F0" // Blue-purple, for generic arcane spells
+#define GLOW_COLOR_KINESIS "#7B68EE" // Purple, pure arcana
+#define GLOW_COLOR_HEX "#b884f8" // Hex purple
+#define GLOW_COLOR_ILLUSION "#CE93D8" // Illusory pink-purple
+#define GLOW_COLOR_HEARTH "#FF8A65" // Warm hearthfire salmon
+#define GLOW_COLOR_LIGHT "#FFFDE7" // Pale warm white, for light spells
+#define GLOW_COLOR_WARD "#D4A844" // Warm amber-gold, for battlewardry / protective ward spells
+#define GLOW_COLOR_BARDIC "#E8837C" // Warm rose, for bardic songs and cadences
 
-// Constants for spell glow intensity. These are literally 1 2 3 4 but it is for documenting design purposes 
+//Gods - Tennite
+#define GLOW_COLOR_UNDIVIDED "#28908C" //Undivided Cyan
+#define GLOW_COLOR_ASTRATA "#F9B362" //Astratan Yellow/Orange
+#define GLOW_COLOR_NOC "#9acdff" //Noc's lightbulb
+#define GLOW_COLOR_RAVOX "#7A1E30" //Ravox Crimson
+#define GLOW_COLOR_MALUM "#884610" //Malum Orange
+
+//Gods - Ascendant
+#define GLOW_COLOR_GRAGGAR "#19345E" //Graggar Dark Blue
+#define GLOW_COLOR_ZIZO "#b76bff" //Graggar Dark Purple
+#define GLOW_COLOR_BAOTHA "#ff008c" //Baotha Violent Rose
+#define GLOW_COLOR_MATTHIOS "#ffd900" //Matthios Golden
+
+
+// Constants for spell glow intensity. These are literally 1 2 3 4 but it is for documenting design purposes
 #define GLOW_INTENSITY_LOW 1 // For spam projectiles or generic buffs
 #define GLOW_INTENSITY_MEDIUM 2 // Anything that would hurt quite a bit
 #define GLOW_INTENSITY_HIGH 3 // Large AOE
 #define GLOW_INTENSITY_VERY_HIGH 4 // Greater Fireball or Massive AOE / T4 spells
 
+// Constants for enchantment effects (used by fit_clothing, gems, etc.)
+#define FORCE_BLADE_ENCHANT 2
+#define DURABILITY_ENCHANT 3
+#define DURABILITY_INCREASE 100
+#define FORCE_FILTER "force_blade"
+#define DURABILITY_FILTER "durability_enchant"
+
+// Spell CD / Chargetime Scaling
+#define SPELL_SCALING_THRESHOLD 10 // The threshold at which the spell scaling starts to kick in
+#define SPELL_POSITIVE_SCALING_THRESHOLD 15 // The threshold at which spell scaling stop
+#define COOLDOWN_REDUCTION_PER_INT 0.05 // The amount of cooldown reduction per point of intelligence above / below threshold
+#define FATIGUE_REDUCTION_PER_INT 0.05 // Stamina cost reduction per INT above threshold. 5 points above = 25% max reduction
+#define DOMINANT_FAITH_ADJUST 0.05 // For miracles
+
+// Armor Penalty - We applies to cooldown because we want static stamina cost
+#define MEDIUM_ARMOR_CD_PENALTY 0.15 // Cooldown multiplier for wearing medium armor
+#define HEAVY_ARMOR_CD_PENALTY 0.3 // Cooldown multiplier for wearing heavy armor
+#define UNTRAINED_ARMOR_CD_PENALTY 0.8 // Cooldown multiplier for wearing armor you're not trained in
+
+// Standardized spell stamina costs
+#define SPELLCOST_CANTRIP			5
+#define SPELLCOST_MINOR_PROJECTILE	10 // Should feels good to spam and not stamcrit you
+#define SPELLCOST_MAJOR_PROJECTILE	20 // 20 seems decent
+#define SPELLCOST_SUPER_PROJECTILE	45 // Only used for GFB for now as an intermediary
+#define SPELLCOST_ULTIMATE			70
+#define SPELLCOST_MINOR_AOE			15
+#define SPELLCOST_MAJOR_AOE			30
+#define SPELLCOST_SINGLE_CC			30
+#define SPELLCOST_UTILITY_BUFF		20 // We want actual cost
+#define SPELLCOST_STAT_BUFF			20 // We want actual cost
+#define SPELLCOST_BRUSH				50 // For blood rush spells, which I don't want to become an overly easy trade for stamina
+#define SPELLCOST_SURGE				65 // For surge spells, which is pretty damn powerful
+#define SPELLCOST_AUGURY				10 // Augury card is cheap
+#define SPELLCOST_CONJURE			20
+#define SPELLCOST_TELEPORT			15
+#define SPELLCOST_MINOR_SUMMON		30
+#define SPELLCOST_MAJOR_SUMMON		50
+// Buff duration tiers
+#define STAT_BUFF_SELF_DURATION		1 MINUTES
+#define STAT_BUFF_ALLY_DURATION		1 MINUTES
+#define ATTUNE_BUFF_DURATION			45 SECONDS // Attune (Giant/Hawk/Haste) uptime, against a 90s cooldown
+#define UTILITY_AOE_BUFF_DURATION	15 MINUTES
+
+// Augmentation augury hand
+#define AUGURY_DURATION				22 SECONDS // Nearly 100% uptime on 15 int.
+#define AUGURY_HAND_COOLDOWN			30 SECONDS
+#define AUGURY_GROUP					"augury" // Buff exclusivity group - a person bears at most one Augury at a time
+#define AUGMENT_CONDUIT_RANGE		7
+#define AUGMENT_CONDUIT_MAX_LINKS	2
+
+//Miracle costs in devotion used.
+#define SPELLCOST_MIRACLE_ORISON		5
+#define SPELLCOST_MIRACLE_MINOR			15
+#define SPELLCOST_MIRACLE			30
+#define SPELLCOST_MIRACLE_MAJOR		60
+#define SPELLCOST_MIRACLE_LEGENDARY	100 //Highest tiers of miracles should have this.
+
+
+#define SPELLCOST_MINOR_SKILL		30
+#define SPELLCOST_MAJOR_SKILL		50
+
+// Spellblade specific cost
+#define SPELLCOST_SB_POKE 12 // Roughly 3 attacks worth
+#define SPELLCOST_SB_MOBILITY 12 // Dashes / Teleports / Anchor
+#define SPELLCOST_SB_ULT 50 // Their ult
+
+#define SPELLCOST_FORM_BLADE 30
+
+// Standardized charge times — keeps poke/major/heavy spells consistent for balance passes
+#define CHARGETIME_POKE			0.5 SECONDS	// Staple poke spells
+#define CHARGETIME_MINOR			1 SECONDS	// Minor utility / support spells
+#define CHARGETIME_MAJOR			1.5 SECONDS	// Major projectiles
+#define CHARGETIME_HEAVY			2 SECONDS	// Heavy AOE / ultimates
+#define CHARGETIME_BARRAGE			3 SECONDS // Barrage / Channeled spells
+
+// Standardized mage projectile speeds — lower = faster
+#define MAGE_PROJ_FAST		1.25	// Quick bolts (arcyne bolt, frost bolt)
+#define MAGE_PROJ_MEDIUM		1.75	// Mid-range projectiles (spitfire, lance)
+#define MAGE_PROJ_SLOW		2		// Heavier projectiles (gravel blast)
+#define MAGE_PROJ_VERY_SLOW	2.5	// Looming doom (fireball)
+
+// Standardized spell ranges
+#define SPELL_RANGE_PROJECTILE 10	// Standard projectile travel distance and projectile spell cast range
+#define SPELL_RANGE_GROUND		7	// Standard ground-targeted / AOE spell cast range
+#define SPELL_RANGE_TWO_SCREENS 14 // Two screens away for very very special spells
+#define SPELL_RANGE_AURA		4	// For 'warcry' type miracles or AOE BUFFS originating on the caster
+#define SPELL_RANGE_ADJACENT	1	// Self explanatory
+
+// Mage projectile effective range - No rider and half damage beyond
+#define MAGE_LONG_PROJ_RANGE	7 // 1 definition, the entire screen
+
+// Charging slowdown tiers — how much the caster is slowed while charging
+#define CHARGING_SLOWDOWN_NONE 0		// Spellblade abilities, no movement penalty
+#define CHARGING_SLOWDOWN_SMALL 1		// Small projectiles, minor spells
+#define CHARGING_SLOWDOWN_MEDIUM 2		// Big projectiles, significant spells
+#define CHARGING_SLOWDOWN_HEAVY 3		// Area denial, channeled spells
+
+#define SPELL_COOLDOWN_POKE 6 SECONDS
+#define SPELL_COOLDOWN_BIG_WHOOPER 18 SECONDS
+
+#define CANCEL_PENALTY_COST_PARTIAL 0.5 // Resource cost you take for canceling a partial charge
+#define CANCEL_PENALTY_COST_CHARGED 1 // Full charge = same cost as just tossing it out
+#define CANCEL_PENALTY_COOLDOWN 0.5
+#define CANCEL_PENALTY_COOLDOWN_MAX 5 SECONDS // We don't want high CD spell to penalize you too hard
+#define CANCEL_GRACE_FRACTION 0.3 // How many decisecond you have to cancel a spell quickly
+#define CANCEL_GRACE_MINIMUM 3
+
+// Holding a fully charged spell. Grace is free, then the hold destabilizes until it tears loose.
+#define SPELL_HOLD_GRACE 1.5 SECONDS // How long you may hold a spell without penalty
+#define SPELL_HOLD_MAX 6 SECONDS // Total before the spell fizzles out
+#define SPELL_HOLD_TEAR_COST 2 // Cost multiplier if it fizzles out - forcing you to commit or cancel it
+#define SPELL_HOLD_DRAIN_RAMP 3 // How much extra hold drain ramp up as you hold onto a spell

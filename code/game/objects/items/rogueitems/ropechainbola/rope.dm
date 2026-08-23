@@ -20,6 +20,7 @@
 	grid_height = 64
 	nudist_approved = TRUE
 	dropshrink = 0.9
+	var/matthios_chains = FALSE
 
 /datum/intent/tie
 	name = "tie"
@@ -66,6 +67,10 @@
 	if(C.handcuffed)
 		return
 
+	if(src.matthios_chains && HAS_TRAIT(C, TRAIT_FREEMAN))
+		to_chat(user, span_warning("[C] shall not be bound by this, for they walk among the ordained free."))
+		return
+
 	if(!(C.get_num_arms(FALSE) || C.get_arm_ignore()))
 		to_chat(user, span_warning("[C] has no arms to tie up."))
 		return
@@ -77,7 +82,9 @@
 	var/surrender_mod = 1
 	if(C.compliance || C.surrendering || HAS_TRAIT(C, TRAIT_BAGGED))
 		surrender_mod = 0.5	
-
+	if(src.matthios_chains && HAS_TRAIT(C, TRAIT_NOBLE))
+		surrender_mod = 0.5
+	
 	C.visible_message(span_warning("[user] is trying to tie [C]'s arms with [src.name]!"), \
 						span_userdanger("[user] is trying to tie my arms with [src.name]!"))
 	playsound(loc, cuffsound, 100, TRUE, -2)
@@ -96,6 +103,10 @@
 	if(C.legcuffed)
 		return
 
+	if(src.matthios_chains && HAS_TRAIT(C, TRAIT_FREEMAN))
+		to_chat(user, span_warning("[C] shall not be bound by this, for they walk among the ordained free."))
+		return
+	
 	if(C.get_num_legs(FALSE) < 2)
 		to_chat(user, span_warning("[C] is missing two or one legs."))
 		return
@@ -106,6 +117,8 @@
 
 	var/surrender_mod = 1
 	if(C.compliance || C.surrendering)
+		surrender_mod = 0.5
+	if(src.matthios_chains && HAS_TRAIT(C, TRAIT_NOBLE))
 		surrender_mod = 0.5
 
 	C.visible_message(span_warning("[user] is trying to tie [C]'s legs with [src.name]!"), \
