@@ -233,7 +233,8 @@
 /datum/reagent/water/blessed/on_mob_life(mob/living/carbon/M)
 	. = ..()
 	if (M.mob_biotypes & MOB_UNDEAD)
-		M.adjustFireLoss(1.5  * REAGENTS_EFFECT_MULTIPLIER)	else
+		M.adjustFireLoss(1.5  * REAGENTS_EFFECT_MULTIPLIER)	
+	else
 		// Heals internal damage very well like potions
 		if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 			M.set_blood_volume(min(M.get_blood_volume()+10, BLOOD_VOLUME_NORMAL))

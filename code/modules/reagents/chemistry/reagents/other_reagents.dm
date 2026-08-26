@@ -699,7 +699,8 @@
 	taste_description = "chlorine"
 
 /datum/reagent/chlorine/on_mob_life(mob/living/carbon/M)
-	M.take_bodypart_damage(1  * REAGENTS_EFFECT_MULTIPLIER, 0, 0, 0)	. = 1
+	M.take_bodypart_damage(1  * REAGENTS_EFFECT_MULTIPLIER, 0, 0, 0)	
+	. = 1
 	..()
 
 /datum/reagent/fluorine
@@ -953,7 +954,8 @@
 /datum/reagent/impedrezene/on_mob_life(mob/living/carbon/M)
 	M.jitteriness = max(M.jitteriness-5,0)
 	if(prob(80))
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2  * REAGENTS_EFFECT_MULTIPLIER)	if(prob(50))
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2  * REAGENTS_EFFECT_MULTIPLIER)
+	if(prob(50))
 		M.drowsyness = max(M.drowsyness, 3)
 	if(prob(10))
 		M.emote("drool")
@@ -1180,7 +1182,8 @@
 
 /datum/reagent/plantnutriment/on_mob_life(mob/living/carbon/M)
 	if(prob(tox_prob))
-		M.adjustToxLoss(1  * REAGENTS_EFFECT_MULTIPLIER, 0)		. = 1
+		M.adjustToxLoss(1  * REAGENTS_EFFECT_MULTIPLIER, 0)
+		. = 1
 	..()
 
 /datum/reagent/plantnutriment/eznutriment
