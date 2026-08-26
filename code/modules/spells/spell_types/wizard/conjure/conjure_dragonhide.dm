@@ -111,3 +111,4 @@
 
 
 
+#undef DRAGONHIDE_FILTER

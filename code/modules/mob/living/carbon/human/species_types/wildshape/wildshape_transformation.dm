@@ -180,3 +180,5 @@
 		W.devotion.update_devotion(0)
 
 	qdel(src)
+
+#undef TRAIT_SOURCE_WILDSHAPE

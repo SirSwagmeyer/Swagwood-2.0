@@ -1,4 +1,4 @@
-#define ACTION_BUTTON_DEFAULT_BACKGROUND "default"
+#define AB_MAX_COLUMNS 12
 
 /atom/movable/screen/movable/action_button
 	var/datum/action/linked_action
@@ -12,14 +12,8 @@
 	var/id
 	var/ordered = TRUE //If the button gets placed into the default bar
 	nomouseover = FALSE
-	var/rebinding = FALSE
 
 	var/atom/movable/screen/maptext_holder/maptext_holder
-
-/atom/movable/screen/movable/action_button/New()
-	. = ..()
-	maptext_holder = new(src)
-	vis_contents.Add(maptext_holder)
 
 /atom/movable/screen/movable/action_button/Destroy()
 	QDEL_NULL(maptext_holder)
@@ -57,18 +51,6 @@
 		return
 
 	var/list/modifiers = params2list(params)
-	if(modifiers["middle"])
-		if(rebinding)		// No matter what I did it kept opening up two windows when I clicked one button so we're doing this instead
-			return TRUE		// THE PROC IS LOCKED
-		rebinding = TRUE 	// Lock the proc variable
-		var/new_slot = input(linked_action.owner, "Enter action slot number (1-9):", "Rebind Action", linked_action.slot) as num|null
-		if(new_slot && new_slot >= 1 && new_slot <= 9)
-			for(var/datum/action/A in linked_action.owner.actions)
-				if(A.slot == new_slot)
-					A.slot = 0
-			linked_action.slot = new_slot
-		rebinding = FALSE 	// Unlock the proc once we're done (I know it's not a proc)
-		return TRUE
 	if(modifiers["alt"])
 		if(locked)
 			to_chat(usr, span_warning("Action button \"[name]\" is locked, unlock it first."))
@@ -83,12 +65,7 @@
 			usr.client.prefs.action_buttons_screen_locs["[name]_[id]"] = locked ? moved : null
 		return TRUE
 	if(modifiers["shift"])
-		var/datum/action/spell_action/SA = linked_action
-		if(istype(SA))
-			SA.examine(usr)
-		else
-			examine_ui(usr)
-		to_chat(usr, "[span_medradio("Alt-click: Reset Position | Ctrl-click: Toggle lock | Middle-click: Rebind slot")]") // Yes I just stole the medical_radio color
+		examine_ui(usr)
 		return TRUE
 	if(usr.next_click > world.time)
 		return
@@ -113,7 +90,7 @@
 	var/mutable_appearance/hide_appearance
 	var/mutable_appearance/show_appearance
 
-/atom/movable/screen/movable/action_button/hide_toggle/Initialize(mapload)
+/atom/movable/screen/movable/action_button/hide_toggle/Initialize()
 	. = ..()
 	var/static/list/icon_cache = list()
 
@@ -246,21 +223,6 @@
 			if(reload_screen)
 				client.screen += B
 
-//		if(!button_number)
-//			hud_used.hide_actions_toggle.screen_loc = null
-//			return
-
-//	if(!hud_used.hide_actions_toggle.moved)
-//		hud_used.hide_actions_toggle.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number+1)
-//	else
-//		hud_used.hide_actions_toggle.screen_loc = hud_used.hide_actions_toggle.moved
-//	if(reload_screen)
-//		client.screen += hud_used.hide_actions_toggle
-
-
-
-#define AB_MAX_COLUMNS 12
-
 /datum/hud/proc/ButtonNumberToScreenCoords(number) // TODO : Make this zero-indexed for readabilty
 	var/row = round((number - 1)/AB_MAX_COLUMNS)
 	var/col = ((number - 1)%(AB_MAX_COLUMNS)) + 1
@@ -283,6 +245,10 @@
 	button.transform = M
 
 /atom/movable/screen/movable/action_button/proc/update_maptext(cd_time_deciseconds, color_cd = "#800000", color_neutral = "#ffffff")
+	if(!istype(maptext_holder))
+		maptext_holder = new(src)
+		vis_contents.Add(maptext_holder)
+
 	maptext_holder.update_maptext(cd_time_deciseconds, color_cd, color_neutral)
 
 /atom/movable/screen/maptext_holder
@@ -291,17 +257,20 @@
 	maptext_y = 4
 
 /atom/movable/screen/maptext_holder/proc/update_maptext(cd_time_deciseconds, color_cd = "#800000", color_neutral = "#ffffff")
-	if(cd_time_deciseconds <= 0)
-		maptext = null
-		color = color_neutral
-		return
-	var/seconds_left = round(cd_time_deciseconds / (1 SECONDS), 0.1)
-	if(seconds_left >= 60)
-		var/mins = round(seconds_left / 60)
-		var/secs = round(seconds_left) % 60
-		maptext = MAPTEXT("[mins]:[secs < 10 ? "0[secs]" : "[secs]"]")
-	else
-		maptext = MAPTEXT("[seconds_left]s")
-	color = color_cd
+	animate(src, flags = ANIMATION_END_NOW)
+
+	// queue an animate for each decisecond remaining in click cooldown + 1
+	for(var/i in 1 to cd_time_deciseconds + 1)
+		var/decisceonds_left_this_iter = cd_time_deciseconds - i
+		var/displaytext = null
+		if(decisceonds_left_this_iter > 0)
+			displaytext = MAPTEXT("[round(decisceonds_left_this_iter / (1 SECONDS), 0.1)]s")
+
+		if(i == 1)
+			animate(src, maptext = displaytext, color = color_cd, 1)
+		else if(i == cd_time_deciseconds + 1)
+			animate(maptext = displaytext, color = color_neutral, 1)
+		else
+			animate(maptext = displaytext, 1)
 
 #undef AB_MAX_COLUMNS

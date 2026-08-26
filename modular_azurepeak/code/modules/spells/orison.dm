@@ -233,15 +233,14 @@
 /datum/reagent/water/blessed/on_mob_life(mob/living/carbon/M)
 	. = ..()
 	if (M.mob_biotypes & MOB_UNDEAD)
-		M.adjustFireLoss(1.5*REM)
-	else
+		M.adjustFireLoss(1.5  * REAGENTS_EFFECT_MULTIPLIER)	else
 		// Heals internal damage very well like potions
 		if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 			M.set_blood_volume(min(M.get_blood_volume()+10, BLOOD_VOLUME_NORMAL))
-		M.adjustToxLoss(-3*REM, 0)
-		M.adjustOxyLoss(-3*REM, 0)
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3*REM)
-		M.adjustCloneLoss(-3*REM, 0)
+		M.adjustToxLoss(-3  * REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustOxyLoss(-3  * REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3  * REAGENTS_EFFECT_MULTIPLIER)
+		M.adjustCloneLoss(-3  * REAGENTS_EFFECT_MULTIPLIER, 0)
 		// Does NOT heal brute or fire damage
 
 /datum/reagent/water/blessed/on_mob_metabolize(mob/living/L)
@@ -277,22 +276,21 @@
 		// Heals internal damage very well like potions for undead/dark patrons
 		if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 			M.set_blood_volume(min(M.get_blood_volume()+10, BLOOD_VOLUME_NORMAL))
-		M.adjustToxLoss(-3*REM, 0)
-		M.adjustOxyLoss(-3*REM, 0)
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3*REM)
-		M.adjustCloneLoss(-3*REM, 0)
+		M.adjustToxLoss(-3  * REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustOxyLoss(-3  * REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3  * REAGENTS_EFFECT_MULTIPLIER)
+		M.adjustCloneLoss(-3  * REAGENTS_EFFECT_MULTIPLIER, 0)
 		// Does NOT heal brute or fire damage
 	else
 		// Heals less for divine worshippers, but still internal damage only
 		if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 			M.set_blood_volume(min(M.get_blood_volume()+5, BLOOD_VOLUME_NORMAL))
-		M.adjustToxLoss(-1.5*REM, 0)
-		M.adjustOxyLoss(-1.5*REM, 0)
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1.5*REM)
-		M.adjustCloneLoss(-1.5*REM, 0)
+		M.adjustToxLoss(-1.5  * REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustOxyLoss(-1.5  * REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1.5  * REAGENTS_EFFECT_MULTIPLIER)
+		M.adjustCloneLoss(-1.5  * REAGENTS_EFFECT_MULTIPLIER, 0)
 		// Does NOT heal brute or fire damage
-		M.stamina_add(1*REM)
-
+		M.stamina_add(1  * REAGENTS_EFFECT_MULTIPLIER)
 /obj/item/melee/touch_attack/orison/proc/lay_hands(atom/thing, mob/living/carbon/human/user)
 	var/holy_skill = user.get_skill_level(attached_spell.associated_skill)
 	var/cast_time = 40 - (holy_skill * 4)

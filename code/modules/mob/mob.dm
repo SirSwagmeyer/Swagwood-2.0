@@ -1448,3 +1448,5 @@ GLOBAL_VAR_INIT(mobids, 1)
 
 	clear_important_client_contents()
 	canon_client = null
+
+#undef MOB_FACE_DIRECTION_DELAY

@@ -988,6 +988,8 @@
 #undef VOLUME_PER_STEW_COOK
 #undef VOLUME_PER_STEW_COOK_AFTER
 
+#undef DEEP_FRY_TIME
+#undef OIL_CONSUMED
 //Prestidigitation wisps are fun to decorate with!
 
 /obj/effect/wisp

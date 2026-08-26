@@ -578,3 +578,5 @@
 /atom/movable/screen/alert/status_effect/buff/t3eyes
 	name = "Cursed necran eyes"
 	desc = "Something stolen now sees through you."
+
+#undef RGB2EYECOLORSTRING

@@ -1,11 +1,4 @@
 #define DEFAULT_DURATION 15 MINUTES
-#define FORCE_BLADE_ENCHANT 2
-#define DURABILITY_ENCHANT 3
-#define FORCE_BLADE_FORCE 5
-#define DURABILITY_INCREASE 100
-#define FORCE_FILTER "force_blade"
-#define DURABILITY_FILTER "durability_enchant"
-
 // I nuked the former Searing Blade. Leaving 1 open for a future replacement
 
 /* Component used for adding enchantment from the enchant weapon spell
@@ -127,3 +120,4 @@
 	apply_enchant(I, TRUE)
 
 #undef DEFAULT_DURATION
+#undef ENCHANT_DURATION_GOLD

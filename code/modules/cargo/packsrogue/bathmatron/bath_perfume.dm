@@ -106,3 +106,6 @@
 					/obj/item/hair_dye_cream,
 					/obj/item/hair_dye_cream,
 				)
+
+#undef CHEAP_PERFUME_PRICE
+#undef EXPENSIVE_PERFUME_PRICE

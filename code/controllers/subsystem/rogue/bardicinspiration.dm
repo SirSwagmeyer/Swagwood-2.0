@@ -1,10 +1,5 @@
 // Bardic Inspo time - Datum/definition setup
 
-#define BARD_T1 1
-#define BARD_T2 2
-#define BARD_T3 3
-#define BARD_RESET_COOLDOWN 2 MINUTES
-
 GLOBAL_LIST_INIT(learnable_songs, (list(/obj/effect/proc_holder/spell/invoked/song/dirge_fortune,
 		/obj/effect/proc_holder/spell/invoked/song/discordant_dirge,
 		/obj/effect/proc_holder/spell/invoked/song/furtive_fortissimo,

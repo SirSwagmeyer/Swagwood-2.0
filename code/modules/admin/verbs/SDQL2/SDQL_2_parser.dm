@@ -1,3 +1,6 @@
+#define SDQL2_VALID_OPTION_TYPES list("proccall", "select", "priority", "autogc" , "sequential")
+#define SDQL2_VALID_OPTION_VALUES list("async", "blocking", "force_nulls", "skip_nulls", "high", "normal", "keep_alive" , "true")
+
 //I'm pretty sure that this is a recursive [s]descent[/s] ascent parser.
 
 
@@ -90,7 +93,7 @@
 		return null
 
 /datum/SDQL_parser/proc/tokenl(i)
-	return LOWER_TEXT(token(i))
+	return lowertext(token(i))
 
 /datum/SDQL_parser/proc/query_options(i, list/node)
 	var/list/options = list()
@@ -605,7 +608,7 @@
 		node += "null"
 		i++
 
-	else if(LOWER_TEXT(copytext(token(i), 1, 3)) == "0x" && isnum(hex2num(copytext(token(i), 3))))
+	else if(lowertext(copytext(token(i), 1, 3)) == "0x" && isnum(hex2num(copytext(token(i), 3))))
 		node += hex2num(copytext(token(i), 3))
 		i++
 
@@ -629,3 +632,6 @@
 		i = variable(i, node)
 
 	return i
+
+#undef SDQL2_VALID_OPTION_TYPES
+#undef SDQL2_VALID_OPTION_VALUES

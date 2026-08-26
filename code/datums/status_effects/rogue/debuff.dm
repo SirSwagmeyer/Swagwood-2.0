@@ -1,3 +1,9 @@
+#define PARALYZE_L_ARM 0x1
+#define PARALYZE_R_ARM 0x2
+#define PARALYZE_L_LEG 0x4
+#define PARALYZE_R_LEG 0x8
+#define PARALYZE_SUM (PARALYZE_L_ARM | PARALYZE_R_ARM | PARALYZE_L_LEG | PARALYZE_R_LEG)
+
 /datum/status_effect/debuff
 	status_type = STATUS_EFFECT_REFRESH
 
@@ -1039,22 +1045,6 @@
 ///HARPY FLIGHT STUFF END///
 ///////////////////////////
 
-/datum/status_effect/debuff/specialcd
-	id = "specialcd"
-	alert_type = /atom/movable/screen/alert/status_effect/debuff/specialcd
-	duration = 30 SECONDS
-	status_type = STATUS_EFFECT_UNIQUE
-
-/datum/status_effect/debuff/specialcd/on_creation(mob/living/new_owner, new_dur)
-	if(new_dur)
-		duration = new_dur
-	return ..()
-
-/atom/movable/screen/alert/status_effect/debuff/specialcd
-	name = "Special Manouevre Cooldown"
-	desc = "I used it. I must wait."
-	icon_state = "debuff"
-
 /datum/status_effect/debuff/liver_failure
 	id = "liver_failure"
 	alert_type = null
@@ -1233,3 +1223,24 @@
 	name = "Musked"
 	desc = "Someone's stench rubbed off on me. I should be able to wash it off, or wait it out."
 	icon_state = "debuff"
+
+/datum/status_effect/debuff/specialcd
+	id = "specialcd"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/specialcd
+	duration = 2 SECONDS
+
+/datum/status_effect/debuff/specialcd/on_creation(mob/living/new_owner, new_dur)
+	if(new_dur)
+		duration = new_dur
+	return ..()
+
+/atom/movable/screen/alert/status_effect/debuff/specialcd
+	name = "Special Maneuvre Cooldown"
+	desc = "I used it. I must wait."
+	icon_state = "strikecd"
+
+#undef PARALYZE_L_ARM
+#undef PARALYZE_R_ARM
+#undef PARALYZE_L_LEG
+#undef PARALYZE_R_LEG
+#undef PARALYZE_SUM

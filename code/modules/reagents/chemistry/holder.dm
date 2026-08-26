@@ -960,3 +960,5 @@
 		var/datum/reagent/R = GLOB.chemical_reagents_list[X]
 		if(ckey(chem_name) == ckey(LOWER_TEXT(R.name)))
 			return X
+
+#undef CHEMICAL_QUANTISATION_LEVEL

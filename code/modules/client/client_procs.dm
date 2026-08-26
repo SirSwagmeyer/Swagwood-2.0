@@ -1270,3 +1270,10 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	if(SSsounds.initialized == TRUE)
 		for(var/sound_path as anything in SSsounds.all_music_sounds)
 			src << load_resource(sound_path, -1)
+
+#undef LIMITER_SIZE
+#undef CURRENT_SECOND
+#undef SECOND_COUNT
+#undef CURRENT_MINUTE
+#undef MINUTE_COUNT
+#undef ADMINSWARNED_AT

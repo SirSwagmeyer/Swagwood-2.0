@@ -64,3 +64,8 @@
 #define SPAN_NARRATION(str) ("<span class='narration'>[str]</span>")
 #define SPAN_HEAR(str) ("<span class='hear'>[str]</span>")
 #define SPAN_DEADSAY(str) ("<span class='deadsay'>[str]</span>")
+
+
+// For deadchat control
+#define DEMOCRACY_MODE "democracy"
+#define ANARCHY_MODE "anarchy"

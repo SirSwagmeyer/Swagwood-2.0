@@ -543,3 +543,7 @@
 /atom/movable/screen/alert/status_effect/buff/familiar/worn_stone
 	name = "Worn Stone"
 	desc = "Nothing feels urgent. You can take your time... and take a hit."
+
+#undef FAMILIAR_SEE_IN_DARK
+#undef FAMILIAR_MIN_BODYTEMP
+#undef FAMILIAR_MAX_BODYTEMP

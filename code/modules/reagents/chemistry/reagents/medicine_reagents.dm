@@ -33,8 +33,8 @@
 		last_added = new_blood_level - M.get_blood_volume()
 		M.set_blood_volume(new_blood_level)
 	if(prob(33))
-		M.adjustBruteLoss(-0.5*REM, 0)
-		M.adjustFireLoss(-0.5*REM, 0)
+		M.adjustBruteLoss(-0.5  * REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustFireLoss(-0.5  * REAGENTS_EFFECT_MULTIPLIER, 0)
 		. = TRUE
 	..()
 
@@ -48,8 +48,8 @@
 		holder.add_reagent(/datum/reagent/consumable/sugar, 1)
 		holder.remove_reagent(/datum/reagent/medicine/salglu_solution, 0.5)
 	if(prob(33))
-		M.adjustBruteLoss(0.5*REM, FALSE, FALSE, BODYPART_ORGANIC)
-		M.adjustFireLoss(0.5*REM, FALSE, FALSE, BODYPART_ORGANIC)
+		M.adjustBruteLoss(0.5  * REAGENTS_EFFECT_MULTIPLIER, FALSE, FALSE, BODYPART_ORGANIC)
+		M.adjustFireLoss(0.5  * REAGENTS_EFFECT_MULTIPLIER, FALSE, FALSE, BODYPART_ORGANIC)
 		. = TRUE
 	..()
 
@@ -72,9 +72,9 @@
 	if(wCount.len > 0)
 		M.heal_wounds(5) // something between red and strong red. We cannot drink water 
 	if(volume > 0.99)
-		M.adjustBruteLoss(-1 * REM, 0)
-		M.adjustFireLoss(-1 * REM, 0)
-		M.adjustOxyLoss(-1, 0)
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * REM)
-		M.adjustCloneLoss(-1 * REM, 0)
+		M.adjustBruteLoss(-1  * REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustFireLoss(-1  * REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustOxyLoss(-1  * REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1  * REAGENTS_EFFECT_MULTIPLIER)
+		M.adjustCloneLoss(-1  * REAGENTS_EFFECT_MULTIPLIER, 0)
 	return ..()

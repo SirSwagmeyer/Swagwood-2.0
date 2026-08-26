@@ -210,3 +210,5 @@
 		armor = /obj/item/clothing/suit/roguetown/shirt/tunic/random
 	neck = /obj/item/clothing/neck/roguetown/gorget/cursed_collar
 	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
+
+#undef CTAG_RUNAWAY_PRISONER

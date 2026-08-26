@@ -253,3 +253,4 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	. = ..()
 
 
+#undef INITIAL_BLOODPOOL_PERCENTAGE

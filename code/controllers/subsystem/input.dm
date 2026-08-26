@@ -99,7 +99,6 @@ SUBSYSTEM_DEF(input)
 
 	movements_per_second = MC_AVG_SECONDS(movements_per_second, moves_this_run, wait TICKS)
 
-#define NONSENSICAL_VERB "NONSENSICAL_VERB_THAT_DOES_NOTHING"
 /// A verb that does nothing, used for clearing keybinds faster.
 /client/verb/NONSENSICAL_VERB_THAT_DOES_NOTHING()
 	set name = "NONSENSICAL_VERB_THAT_DOES_NOTHING"

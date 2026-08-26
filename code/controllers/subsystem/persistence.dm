@@ -241,3 +241,4 @@ SUBSYSTEM_DEF(persistence)
 
 #undef FILE_RECENT_MAPS
 #undef KEEP_ROUNDS_MAP
+#undef FILE_ANTAG_REP

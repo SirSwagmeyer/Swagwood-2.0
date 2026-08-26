@@ -14,3 +14,10 @@
 #define GLOW_INTENSITY_HIGH 3 // Large AOE
 #define GLOW_INTENSITY_VERY_HIGH 4 // Greater Fireball or Massive AOE / T4 spells
 
+// Constants for enchanted_weapon
+#define FORCE_BLADE_ENCHANT 2
+#define DURABILITY_ENCHANT 3
+#define FORCE_BLADE_FORCE 5
+#define DURABILITY_INCREASE 100
+#define FORCE_FILTER "force_blade"
+#define DURABILITY_FILTER "durability_enchant"

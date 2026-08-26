@@ -202,3 +202,8 @@
 /obj/structure/stairs/stone/cwdown
 	icon = 'icons/obj/stairscurve.dmi'
 	icon_state = "stoneCWdown"
+
+
+#undef STAIR_TERMINATOR_AUTOMATIC
+#undef STAIR_TERMINATOR_NO
+#undef STAIR_TERMINATOR_YES

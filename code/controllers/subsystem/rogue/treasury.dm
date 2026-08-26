@@ -385,3 +385,11 @@ SUBSYSTEM_DEF(treasury)
 			continue
 		current_passive_spending += A.passive_generation * A.generation_price
 	return current_passive_spending
+
+#undef RURAL_TAXAdd a comment on  lines R352 to R353Add diff commentMarkdown input:  edit mode selected.WritePreviewAdd a suggestionHeadingBold(control b) control⌃ bBItalic(control i) control⌃ iIQuote(control shift right angle bracket) control⌃ shift⇧ right angle bracket>Code(control e) control⌃ eELink(control k) control⌃ kKUnordered list(control 8) control⌃ 88Numbered list(control shift ampersand) control⌃ shift⇧ ampersand&Task list(control shift l) control⌃ shift⇧ lLMentionReferenceMore itemsSaved repliesAdd FilesPaste, drop, or click to add filesCancelCommentStart a review
+#undef TREASURY_TICK_AMOUNT
+#undef EXPORT_ANNOUNCE_THRESHOLD
+#undef TAX_CAT_NOBLE
+#undef TAX_CAT_CHURCH
+#undef TAX_CAT_YEOMEN
+#undef TAX_CAT_PEASANTS

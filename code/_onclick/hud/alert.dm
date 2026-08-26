@@ -88,9 +88,6 @@
 	push_screen_to_observers(alert, TRUE)
 	qdel(alert)
 
-#define ALERT_STATUS	0
-#define ALERT_DEBUFF	1
-#define ALERT_BUFF		2
 
 /atom/movable/screen/alert
 	icon = 'icons/mob/screen_alert.dmi'

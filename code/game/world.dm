@@ -610,3 +610,5 @@ GLOBAL_VAR(restart_counter)
 		message,
 		announce_channel
 	)
+
+#undef RESTART_COUNTER_PATH

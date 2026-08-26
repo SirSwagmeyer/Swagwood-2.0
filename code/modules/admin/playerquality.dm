@@ -378,3 +378,4 @@
 	message_admins("[src.ckey] recalc'd [the_ckey]'s PQ from commends: +[round(granted, 0.01)].")
 	log_admin("[src.ckey] recalc'd [the_ckey]'s PQ from commends: +[round(granted, 0.01)].")
 
+#undef RCP_CONTRIBUTION_CAP

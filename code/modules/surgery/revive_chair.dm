@@ -333,3 +333,5 @@
 		occupant.apply_status_effect(/atom/movable/screen/alert/status_effect/debuff/revived)
 
 	return TRUE
+
+#undef WEATHER_RAIN

@@ -68,8 +68,7 @@
 #define FIND_REF_NO_CHECK_TICK
 #endif
 
-#ifdef TRAVISBUILDING
-#define UNIT_TESTS
+#if defined(CIBUILDING) && !defined(OPENDREAM)#define UNIT_TESTS
 #endif
 
 #ifdef TRAVISTESTING

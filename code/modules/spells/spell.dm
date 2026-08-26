@@ -945,3 +945,4 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 #undef MEDIUM_ARMOR_STAM_PENALTY
 #undef HEAVY_ARMOR_STAM_PENALTY
 #undef UNTRAINED_ARMOR_STAM_PENALTY
+#undef FATIGUE_REDUCTION_PER_SKILL
