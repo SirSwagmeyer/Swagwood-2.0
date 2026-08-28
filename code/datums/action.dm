@@ -23,8 +23,6 @@
 	var/owner_has_control = TRUE
 	/// This can be the same as "target" but is not ALWAYS the same - this is set and unset with Grant() and Remove()
 	var/mob/owner
-	/// Spell slot number for quick keybinding (1-9)
-	var/slot = 0
 
 /datum/action/New(Target)
 	link_to(Target)
@@ -125,7 +123,8 @@
 		if(!status_only)
 			button.name = name
 			button.desc = desc
-			if(owner && owner.hud_used && background_icon_state == "default")				var/list/settings = owner.hud_used.get_action_buttons_icons()
+			if(owner && owner.hud_used && background_icon_state == "default")
+				var/list/settings = owner.hud_used.get_action_buttons_icons()
 				if(button.icon != settings["bg_icon"])
 					button.icon = settings["bg_icon"]
 				if(button.icon_state != settings["bg_state"])
@@ -347,14 +346,9 @@
 	return FALSE
 
 /datum/action/spell_action/proc/examine(mob/user)
-	var/list/inspec = list("<br><span class='notice'><b>[name]</b></span>")
+	var/list/inspec = list("<br><span class='notice'><b>[name]</b> intent</span>")
 	if(desc)
 		inspec += "\n[desc]"
-	var/obj/effect/proc_holder/spell/S = target
-	if(istype(S))
-		var/list/stats = S.get_spell_statistics(user)
-		if(length(stats))
-			inspec += "<br>" + stats.Join("<br>")
 	to_chat(user, "[inspec.Join()]")
 
 

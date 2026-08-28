@@ -31,6 +31,25 @@
 #define SWORD_STRIKE	 /datum/intent/sword/strike //mordhau grip
 #define SWORD_PEEL		/datum/intent/sword/peel
 
+// Shield Intents defines
+#define SHIELD_BASH		/datum/intent/shield/bash
+#define SHIELD_BLOCK		/datum/intent/shield/block
+#define SHIELD_BASH_METAL 	/datum/intent/shield/bash/metal
+#define SHIELD_BLOCK_METAL 	/datum/intent/shield/block/metal
+#define SHIELD_SMASH 		/datum/intent/mace/smash/shield
+#define SHIELD_SMASH_METAL 	/datum/intent/mace/smash/shield/metal
+#define SHIELD_BANG_COOLDOWN (3 SECONDS)
+
+/*
+	Dullfactor Defines. These should be removed at some point.
+*/
+
+#define DULLFACTOR_COUNTERED_BY 1.2 // If a shaft is COUNTERED by a weapon type, this is the damage to go for
+#define DULLFACTOR_NEUTRAL 1 // If a shaft is NEUTRAL to a weapon type, this is the damage to go for
+#define DULLFACTOR_COUNTERS 0.8 // If a shaft COUNTERS a damage type, this is the damage to go for
+#define DULLFACTOR_ANTAG 0.5 // For Grand Shaft. Also for dull blade
+// Previously value were closer to 0.4 - 0.5 and 1.5 - 1.7x, but it felt like it make weapons
+// counter certain shaft type too hard, so now the value is between 0.8 to 1.2x for regular type
 #define ELFSWORD_CUT		/datum/intent/sword/cut/elf
 #define ELFSWORD_THRUST		/datum/intent/sword/thrust/elf
 

@@ -115,7 +115,6 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/admins/proc/sleep_view,
 	/datum/admins/proc/wake_view,
 	/datum/admins/proc/extend_round,
-	/client/proc/open_fax_panel,
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(
 	/client/proc/unban_panel,
