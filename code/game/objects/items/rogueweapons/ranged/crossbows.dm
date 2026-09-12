@@ -2,24 +2,32 @@
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 	has_item_quality = TRUE
 	name = "crossbow"
-	desc = "A deadly weapon that shoots a bolt with terrific power."
+	desc = "A deadly weapon that shoots a bolt with terrific power. Unlike the common bow, \
+	it uses a sophisticated mechanism to renock - and retain - its half-length bolts; a \
+	matter that relies more on raw strength than dexterity to master. </br>A favorite \
+	amongst the Keep's ever-dutiful watchmen, both for its relative ease-of-use and \
+	effectiveness against Psydonia's unchivalrous inhabitants."
 	icon = 'icons/roguetown/weapons/misc32.dmi'
 	icon_state = "crossbow0"
 	item_state = "crossbow"
 	experimental_onhip = TRUE
 	experimental_onback = TRUE
-	possible_item_intents = list(/datum/intent/shoot/crossbow, /datum/intent/arc/crossbow, INTENT_GENERIC)
+	possible_item_intents = list(/datum/intent/shoot/crossbow, /datum/intent/arc/crossbow, /datum/intent/buttstroke)
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/xbow
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
 	randomspread = 1
 	spread = 0
 	can_parry = TRUE
+	associated_skill = /datum/skill/combat/crossbows
+	wdefense = 3
+	max_integrity = 100
 	var/chargingspeed = 40
 	var/reloadtime = 40
 	var/movingreload = FALSE
+	var/onehanded = FALSE
 	var/hasloadedsprite = FALSE
-	force = 10
+	force = 15
 	var/cocked = FALSE
 	cartridge_wording = "bolt"
 	load_sound = 'sound/foley/nockarrow.ogg'
@@ -219,20 +227,32 @@
 	
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow
 	name = "slurbow"
-	desc = "A lighter weight crossbow with a distinct barrel shroud holding the bolt in place. Light enough to arm by hand. <br>They're popular among among highwaymen and the patrolling lamplighters of Otava."
+	desc = "A lighter weight crossbow with a distinct barrel shroud holding the bolt in place. While its reduced draw-weight does hamper the power of its bolts, it's consequently much easier to rearm and aim than the common crossbow; doubly-so, while on the move. </br>They're popular among among highwaymen and the patrolling lamplighters of Otava."
 	icon = 'icons/roguetown/weapons/misc32.dmi'
 	icon_state = "slurbow0"
 	item_state = "slurbow"
-	possible_item_intents = list(/datum/intent/shoot/crossbow/slurbow, /datum/intent/arc/crossbow/slurbow, INTENT_GENERIC)
+	possible_item_intents = list(/datum/intent/shoot/crossbow/slurbow, /datum/intent/arc/crossbow/slurbow, /datum/intent/buttstroke)
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/slurbow
 	chargingspeed = 20
 	damfactor = 0.6
 	accfactor = 1.3
 	reloadtime = 20
+	force = 10
 	hasloadedsprite = TRUE
 	movingreload = TRUE
+	onehanded = TRUE
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_HIP
 	penfactor = 0.5		//Bolts have 50 pen, this decreases to 25. Should only pen armor with less than 67 protection.
+	w_class = WEIGHT_CLASS_SMALL
+	wdefense = 2
+	max_integrity = 80
 	damage_from_perception = TRUE
+
+/obj/item/ammo_box/magazine/internal/shot/slurbow
+	ammo_type = /obj/item/ammo_casing/caseless/rogue/bolt/light
+	caliber = "lightbolt"
+	max_ammo = 1
+	start_empty = TRUE
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy
 	name = "siegebow"
@@ -259,6 +279,12 @@
 	inv_storage_delay = 2 SECONDS
 
 
+/obj/item/ammo_box/magazine/internal/shot/heavy_xbow
+	ammo_type = /obj/item/ammo_casing/caseless/rogue/heavy_bolt
+	caliber = "heabolt"
+	max_ammo = 1
+	start_empty = TRUE
+
 /datum/intent/shoot/crossbow/heavy
 	basetime = 60
 	chargetime = 1
@@ -280,6 +306,19 @@
 	if(mastermob)
 		mastermob.visible_message(span_warning("[mastermob] readies [masteritem] for a precise shot!"))
 		playsound(mastermob, pick('sound/combat/Ranged/crossbow_medium_reload-02.ogg'), 100, FALSE)
+
+/datum/intent/buttstroke
+	name = "buttstroke"
+	blade_class = BCLASS_BLUNT
+	attack_verb = list("strikes", "buttstrokes")
+	hitsound = list('sound/combat/hits/blunt/woodblunt (1).ogg', 'sound/combat/hits/blunt/woodblunt (2).ogg')
+	chargetime = 0
+	penfactor = BLUNT_DEFAULT_PENFACTOR
+	damfactor = 1.1 //Translates into 11 DMG for a Slurbow, 16.5 DMG for a Crossbow, and 23 DMG for a Siegebow.
+	swingdelay = 0
+	icon_state = "instrike"
+	item_d_type = "blunt"
+	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR - 50 //Reduces integrity damage modifier to +10%.
 
 /datum/intent/buttstroke/heavy
 	name = "heavy buttstroke"

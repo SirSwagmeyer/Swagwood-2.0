@@ -5,9 +5,28 @@
 #define BOLT_PENETRATION	50
 #define BULLET_PENETRATION	100
 
+#define MIN_ARROW_RANGE		3
+#define MAX_ARROW_RANGE		14
+#define MIN_BOLT_RANGE		2
+#define MAX_BOLT_RANGE		9
+#define MIN_BULLET_RANGE	2
+#define MAX_BULLET_RANGE	7
+
+#define AP_FALLOFF_ARROW	0.75
+#define DAM_FALLOFF_ARROW	0.5
+#define AP_FALLOFF_BOLT		0.5
+#define DAM_FALLOFF_BOLT	0.75
+#define AP_FALLOFF_BULLET	0.5
+#define DAM_FALLOFF_BULLET	0.5
+
 //parent of all bolts and arrows ฅ^•ﻌ•^ฅ
-/obj/item/ammo_casing/caseless/rogue/
+/obj/item/ammo_casing/caseless/rogue
 	firing_effect_type = null
+
+/obj/item/ammo_casing/caseless/rogue/get_mechanics_examine(mob/user)
+	. = ..()
+	. += span_info("Projectiles have maximum and minimum falloff ranges, with particular falloff factors for damage and armour penetration.")
+	. += span_info("If the target is hit between the maximum and minimum tile range, then the full force and AP is delivered.")
 
 //bolts ฅ^•ﻌ•^ฅ
 
@@ -22,6 +41,13 @@
 	dropshrink = 0.6
 	max_integrity = 10
 	force = 10
+
+/obj/item/ammo_casing/caseless/rogue/bolt/light
+	name = "light bolt"
+	desc = "A lighter, far less sturdier bolt. Made for smaller crossbows."
+	icon_state = "light_bolt"
+	caliber = "lightbolt"
+	projectile_type = /obj/projectile/bullet/reusable/bolt/light
 
 /obj/item/ammo_casing/caseless/rogue/bolt/ancient
 	name = "ancient bolt"
@@ -67,11 +93,24 @@
 	flag = "piercing"
 	speed = 0.5
 	npc_simple_damage_mult = 2
+	min_range = MIN_BOLT_RANGE
+	max_range = MAX_BOLT_RANGE
+	dam_falloff_factor = DAM_FALLOFF_BOLT
+	ap_falloff_factor = AP_FALLOFF_BOLT
 
 /obj/projectile/bullet/reusable/bolt/decrepit
 	damage = 40
 	armor_penetration = 30
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/bolt/decrepit
+
+/obj/projectile/bullet/reusable/bolt/light
+	name = "light bolt"
+	ammo_type = /obj/item/ammo_casing/caseless/rogue/bolt/light
+	speed = 0.8
+	min_range = MIN_BOLT_RANGE - 1 // pointblank
+	max_range = MAX_BOLT_RANGE - 1
+	dam_falloff_factor = DAM_FALLOFF_BOLT 
+	ap_falloff_factor = AP_FALLOFF_BOLT * 1.2 // 0.75
 
 /obj/projectile/bullet/reusable/bolt/ancient
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/bolt/ancient
@@ -234,6 +273,10 @@
 	name = "stone arrow"
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/arrow/stone
 	accuracy = 60
+	min_range = MIN_ARROW_RANGE
+	max_range = MAX_ARROW_RANGE
+	dam_falloff_factor = DAM_FALLOFF_ARROW
+	ap_falloff_factor = AP_FALLOFF_ARROW
 
 /obj/projectile/bullet/reusable/arrow/iron
 	name = "broadhead arrow"
@@ -804,6 +847,10 @@
 	flag = "piercing"
 	speed = 0.4
 	npc_simple_damage_mult = 2
+	min_range = MIN_BULLET_RANGE
+	max_range = MAX_BULLET_RANGE
+	dam_falloff_factor = DAM_FALLOFF_BULLET
+	ap_falloff_factor = AP_FALLOFF_BULLET
 
 /obj/projectile/bullet/reusable/sling_bullet/on_hit(atom/target)
 	. = ..()
@@ -934,6 +981,8 @@
 	flag = "piercing"
 	speed = 0.3
 	npc_simple_damage_mult = 2
+	min_range = MIN_BOLT_RANGE + 2
+	max_range = MAX_BOLT_RANGE + 3
 
 /obj/item/ammo_casing/caseless/rogue/heavy_bolt/holy
 	name = "stake bolt"
@@ -986,3 +1035,17 @@
 #undef ARROW_PENETRATION
 #undef BOLT_PENETRATION
 #undef BULLET_PENETRATION
+
+#undef MIN_ARROW_RANGE
+#undef MAX_ARROW_RANGE
+#undef MIN_BOLT_RANGE
+#undef MAX_BOLT_RANGE
+#undef MIN_BULLET_RANGE
+#undef MAX_BULLET_RANGE
+
+#undef AP_FALLOFF_ARROW
+#undef DAM_FALLOFF_ARROW
+#undef AP_FALLOFF_BOLT
+#undef DAM_FALLOFF_BOLT
+#undef AP_FALLOFF_BULLET
+#undef DAM_FALLOFF_BULLET
