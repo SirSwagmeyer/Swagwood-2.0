@@ -7,7 +7,6 @@
 //	adjustable = CAN_CADJUST
 	sewrepair = FALSE
 	armor = ARMOR_PLATE
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	blocksound = PLATEHIT
 	max_integrity = ARMOR_INT_LEG_STEEL_PLATE
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
@@ -20,7 +19,6 @@
 	smelt_bar_num = 2
 	resistance_flags = FIRE_PROOF
 	armor_class = ARMOR_CLASS_HEAVY
-	peel_threshold = 4
 
 /obj/item/clothing/under/roguetown/platelegs/Initialize(mapload)
 	. = ..()
@@ -52,7 +50,7 @@
 	name = "vicious leggings"
 	desc = "Plate chausses which stir with the innate violence driving our world"
 	icon_state = "graggarplatelegs"
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 	max_integrity = ARMOR_INT_LEG_ANTAG
 
 /obj/item/clothing/under/roguetown/platelegs/graggar/Initialize(mapload)
@@ -64,8 +62,7 @@
 	name = "gilded leggings"
 	desc = "But my outside to behold:"
 	icon_state = "matthioslegs"
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_SMASH, BCLASS_PICK)
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 
 /obj/item/clothing/under/roguetown/platelegs/matthios/Initialize(mapload)
 	. = ..()
@@ -84,9 +81,7 @@
 	name = "avantyne garments"
 	desc = "Leg garments worn by true anointed of the Dame of Ambition. In Her name."
 	icon_state = "zizocloth"
-	armor = ARMOR_ASCENDANT
-	peel_threshold = 5
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_SMASH, BCLASS_PICK)
+	armor = ARMOR_PLATE_BSTEEL
 
 /obj/item/clothing/under/roguetown/platelegs/zizo/Initialize(mapload)
 	. = ..()
@@ -109,11 +104,9 @@
 	blades. If the legends are to be believed, She had worn these very garments long ago during Psydonia's darkest hour; when the Ascendants were but-two, when the \
 	Sinistar blotted out Astrata's glare, and when the ashes of Her empire were still smoldering. </br>..and to think, it was all a war without reason."
 	icon_state = "zizoplatelegs_med"
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 	max_integrity = ARMOR_INT_LEG_ANTAG
-	peel_threshold = 5
 	armor_class = ARMOR_CLASS_MEDIUM
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_SMASH, BCLASS_PICK)
 
 /obj/item/clothing/under/roguetown/platelegs/medium/zizo/Initialize(mapload)
 	. = ..()

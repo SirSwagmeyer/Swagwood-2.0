@@ -3,7 +3,6 @@
 	desc = "Plate gauntlets made out of steel. Good all-around protection for the hands."
 	icon_state = "gauntlets"
 	armor = ARMOR_PLATE
-	prevent_crits = list(BCLASS_CHOP, BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
 	resistance_flags = FIRE_PROOF
 	blocksound = PLATEHIT
 	max_integrity = ARMOR_INT_SIDE_STEEL
@@ -47,7 +46,7 @@
 	name = "vicious gauntlets"
 	desc = "Plate gauntlets which carry the motive force of this world, violence."
 	max_integrity = ARMOR_INT_SIDE_ANTAG
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 	icon_state = "graggarplategloves"
 
 /obj/item/clothing/gloves/roguetown/plate/graggar/Initialize(mapload)
@@ -59,7 +58,7 @@
 	desc = "Many a man his life hath sold,"
 	icon_state = "matthiosgloves"
 	max_integrity = ARMOR_INT_SIDE_ANTAG
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 
 /obj/item/clothing/gloves/roguetown/plate/matthios/Initialize(mapload)
 	. = ..()
@@ -77,7 +76,7 @@
 	desc = "avantyne plate gauntlets. Called forth from the edge of what should be known. In Her name."
 	icon_state = "zizogauntlets"
 	max_integrity = ARMOR_INT_SIDE_ANTAG
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 
 /obj/item/clothing/gloves/roguetown/plate/zizo/Initialize(mapload)
 	. = ..()
@@ -95,7 +94,7 @@
 	tend to leave a stinging bruise, whenever used to parry an incoming strike."
 	armor_class = ARMOR_CLASS_MEDIUM
 	max_integrity = ARMOR_INT_SIDE_ANTAG
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 	icon_state = "zizoplategauntlets_med"
 
 /obj/item/clothing/gloves/roguetown/plate/medium/zizo/Initialize(mapload)
