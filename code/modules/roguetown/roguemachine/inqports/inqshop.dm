@@ -91,7 +91,7 @@
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/psybuns/Initialize(mapload)
 	. = ..()
-	new /obj/item/reagent_containers/food/snacks/rogue/psycrossbun(src)
+	new /obj/item/reagent_containers/food/snacks/rogue/psycrossbun_jamtallowed(src)
 	new /obj/item/reagent_containers/food/snacks/rogue/psycrossbun(src)
 	new /obj/item/reagent_containers/food/snacks/rogue/psycrossbun(src)
 	new /obj/item/reagent_containers/food/snacks/rogue/psycrossbun(src)
@@ -201,6 +201,12 @@
 	name = "3 Bottlebombs"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/bottlebombs
 	marquescost = 3
+
+/obj/structure/closet/crate/chest/inqcrate/supplies/tntstick/Initialize(mapload)
+	. = ..()
+	new /obj/item/tntstick(src)
+	new /obj/item/tntstick(src)
+	new /obj/item/tntstick(src)
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/bottlebombs/Initialize(mapload)
 	. = ..()
