@@ -79031,6 +79031,10 @@
 	},
 /turf/open/floor/rogue/woodturned,
 /area/rogue/outdoors/beach/harbor)
+"qbp" = (
+/obj/structure/fluff/traveltile/dungeon,
+/turf/open/water/sewer,
+/area/rogue/under/town/sewer)
 "qbw" = (
 /obj/structure/chair/wood/rogue{
 	dir = 1
@@ -79875,6 +79879,10 @@
 /obj/effect/decal/cleanable/blood/puddle,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cavewet)
+"qlY" = (
+/obj/structure/fluff/traveltile/dungeon,
+/turf/open/water/swamp/deep,
+/area/rogue/under/town/sewer)
 "qmc" = (
 /obj/structure/closet/crate/chest/crate,
 /obj/structure/fluff/railing/wood/west{
@@ -88926,6 +88934,10 @@
 "sgd" = (
 /turf/closed/wall/mineral/rogue/wooddark,
 /area/rogue/indoors/town/church)
+"sgi" = (
+/obj/structure/fluff/traveltile/dungeon,
+/turf/open/water/swamp,
+/area/rogue/under/town/sewer)
 "sgq" = (
 /obj/structure/roguewindow/openclose/reinforced{
 	dir = 4
@@ -116857,6 +116869,11 @@
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/rtfield/rockhill)
+"xQy" = (
+/obj/structure/flora/roguegrass/water/reeds,
+/obj/structure/fluff/traveltile/dungeon,
+/turf/open/water/swamp,
+/area/rogue/under/town/sewer)
 "xQB" = (
 /obj/structure/bondage/torture_table/lever,
 /turf/open/floor/rogue/churchbrick{
@@ -289696,7 +289713,7 @@ oGO
 rSC
 rSC
 rSC
-rSC
+qbp
 rSC
 rSC
 fIL
@@ -290127,8 +290144,8 @@ gLf
 gLf
 wuy
 rSC
-rSC
-rSC
+qbp
+qbp
 rSC
 rSC
 rSC
@@ -290559,8 +290576,8 @@ rRb
 gLf
 oGO
 rSC
-mXk
-uEX
+xQy
+sgi
 uEX
 iyZ
 mXk
@@ -290991,8 +291008,8 @@ gLf
 gLf
 oGO
 uEX
-uEX
-otg
+sgi
+qlY
 otg
 uEX
 uEX
