@@ -120,7 +120,7 @@
 		if("Psydonic Tomahawk")
 			H.put_in_hands(new /obj/item/rogueweapon/stoneaxe/handaxe/psy(H), TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/quiver/bolts, SLOT_BELT_R, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/quiver/bolts, SLOT_BELT_L, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow, SLOT_BACK_L, TRUE)
 		if("Relic, 'Providence' (Siegebow)")
 			H.equip_to_slot_or_del(new /obj/item/quiver/bolt/heavy/stake_silver, SLOT_BELT_L, TRUE)
