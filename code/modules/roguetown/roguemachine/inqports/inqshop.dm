@@ -115,7 +115,7 @@
 /datum/inqports/supplies/medical
 	name = "5 Needles and Bandaged Rolls"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/medical
-	marquescost = 6
+	marquescost = 3
 
 /obj/item/natural/bundle/cloth/roll/Initialize(mapload)
 	. = ..()
@@ -173,7 +173,7 @@
 /datum/inqports/supplies/manna
 	name = "3 Bottles of Manna"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/manna
-	marquescost = 4
+	marquescost = 3
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/manna/Initialize(mapload)
 	. = ..()
@@ -262,7 +262,7 @@
 	name = "Relic - The Mirrors, Everseeing"
 	item_type = /obj/structure/closet/crate/chest/inqreliquary/relic/bmirror/
 	marquescost = 8
-	maximum = 5
+	maximum = 8
 
 /obj/structure/closet/crate/chest/inqreliquary/relic/bmirror/Initialize(mapload)
 	. = ..()
@@ -348,7 +348,7 @@
 	name = "3 INDEXERs and Writs of Accusation"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/articles/indexaccused
 	marquescost = 6
-	maximum = 1
+	maximum = 3
 
 /obj/structure/closet/crate/chest/inqcrate/articles/indexaccused/Initialize(mapload)
 	. = ..()
