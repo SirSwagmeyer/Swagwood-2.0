@@ -29,22 +29,15 @@
 		var/obj/item/rogueweapon/huntingknife/K = W
 		if(K.sheathe_icon)
 			for(var/obj/item/rogueweapon/scabbard/sheath/sheath in contents)
-				if(!sheath.sheathed) // if no weapon in there
-					if(sheath.eat_sword(user, K, TRUE))
+				var/datum/component/holster/HC = sheath.GetComponent(/datum/component/holster)
+				if(HC && !HC.sheathed) // if no weapon in there
+					if(HC.eat_sword(user, K))
 						user.visible_message(
 							span_notice("[user] slips [W] into [src]'s sheath."),
 							span_notice("I slip [W] into [src]'s sheath.")
 						)
 						return
 	..()	
-
-/obj/item/rogueweapon/scabbard/sheath/proc/eat_sword(mob/user, obj/item/rogueweapon/huntingknife/K, silent = FALSE)
-	if(!K || sheathed)
-		return FALSE
-	K.forceMove(src)
-	sheathed = TRUE
-	update_icon()
-	return TRUE
 
 /obj/item/storage/belt/rogue/leather
 	name = "belt"

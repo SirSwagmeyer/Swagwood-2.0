@@ -129,6 +129,8 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/human = user
 		is_in_slot = (I in (list(human.backl, human.backr, human.beltl, human.beltr) + human.get_inactive_held_item()))
+		if(!is_in_slot && isitem(I.loc) && (I.loc in user.GetAllContents()))
+			is_in_slot = TRUE // stored inside a container the user is carrying
 	if(sheathed && is_in_slot)
 		puke_sword(user)
 		return COMPONENT_NO_ATTACK_HAND
