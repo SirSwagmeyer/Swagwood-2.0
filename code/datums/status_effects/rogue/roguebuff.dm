@@ -1996,9 +1996,6 @@
 		mob_effect.alpha = 255
 		is_active = TRUE
 
-/datum/status_effect/buff/clash/limbguard/guard_swaphands()
-	return
-
 /datum/status_effect/buff/clash/limbguard/on_creation(mob/living/new_owner, ...)
 	. = ..()
 	shield_origin = owner.get_active_held_item()
@@ -2130,6 +2127,12 @@
 
 /datum/status_effect/buff/clash/limbguard/guard_kicked()
 	return
+
+/datum/status_effect/buff/clash/limbguard/guard_swaphands()
+	return
+
+/datum/status_effect/buff/clash/limbguard/guard_on_kick()
+	return	
 
 #define BLOODRAGE_FILTER "bloodrage"
 
