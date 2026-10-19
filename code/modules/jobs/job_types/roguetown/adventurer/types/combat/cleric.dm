@@ -91,9 +91,11 @@
 				gloves = /obj/item/clothing/gloves/roguetown/bandages
 			if("Knuckledusters")
 				if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
-					r_hand = /obj/item/clothing/gloves/roguetown/knuckles/psydon/old
+					beltl = /obj/item/rogueweapon/knuckles/psydon/old
+					gloves = /obj/item/clothing/gloves/roguetown/bandages
 				else
-					r_hand = /obj/item/clothing/gloves/roguetown/knuckles/bronze
+					beltl = /obj/item/rogueweapon/knuckles/bronzeknuckles
+					gloves = /obj/item/clothing/gloves/roguetown/bandages
 			if("Quarterstaff")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 3, TRUE)
 				r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/iron

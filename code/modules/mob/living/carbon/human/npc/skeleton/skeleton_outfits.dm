@@ -161,7 +161,7 @@
 	if(prob(50))
 		r_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/ancient/decrepit
 	else
-		gloves = /obj/item/clothing/gloves/roguetown/knuckles/decrepit
+		r_hand = /obj/item/rogueweapon/knuckles/ancient/decrepit
 	if(prob(20))
 		belt = /obj/item/storage/belt/rogue/leather/rope
 		switch(rand(1, 100))
