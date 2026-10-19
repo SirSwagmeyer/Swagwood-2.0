@@ -1968,7 +1968,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				user.changeMaxDodge(1)
 		if(!nodmg)
 			post_reduction_dmg = (post_weakness_dmg - armor_block)
-//			var/has_vuln_or_exposed = (H.has_status_effect(/datum/status_effect/debuff/exposed) || H.has_status_effect(/datum/status_effect/debuff/vulnerable)) //UNATOMIZABLE CODE FOR THE THE PR THAT WILL FOLLOW
+			var/has_vuln_or_exposed = (H.has_status_effect(/datum/status_effect/debuff/exposed) || H.has_status_effect(/datum/status_effect/debuff/vulnerable)) //UNATOMIZABLE CODE FOR THE THE PR THAT WILL FOLLOW
 			var/datum/wound/crit_wound = affecting.bodypart_attacked_by(user.used_intent.blade_class, post_reduction_dmg, user, selzone, crit_message = TRUE, weapon = I, pen_info = pen_info_check)
 			if(should_embed_weapon(crit_wound, I))
 				var/can_impale = TRUE
