@@ -152,7 +152,7 @@
 /obj/effect/proc_holder/spell/invoked/order/movemovemove
 	name = "Move! Move! Move!"
 	desc = "Orders your underlings to move faster. +5 Speed."
-	overlay_state = "move"
+	overlay_state = "movemovemove"
 
 /obj/effect/proc_holder/spell/invoked/order/movemovemove/cast(list/targets, mob/living/user)
 	. = ..()
@@ -213,7 +213,7 @@
 /obj/effect/proc_holder/spell/invoked/order/takeaim
 	name = "Take aim!"
 	desc = "Orders your underlings to be more precise. +5 Perception."
-	overlay_state = "target"
+	overlay_state = "takeaim"
 
 /datum/status_effect/buff/order/takeaim
 	id = "takeaim"
