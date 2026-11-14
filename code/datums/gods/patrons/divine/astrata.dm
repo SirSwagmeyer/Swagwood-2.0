@@ -6,14 +6,16 @@
 	virtues = "Servility, Honesty, Oppression"
 	sins = "Disloyalty, Undeath, Sloth"
 	mob_traits = list(TRAIT_APRICITY)
-	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
-					/obj/effect/proc_holder/spell/invoked/ignition				= CLERIC_T0,
-					/obj/effect/proc_holder/spell/self/astrata_gaze				= CLERIC_T0,
-					/obj/effect/proc_holder/spell/invoked/lesser_heal 			= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/blood_heal			= CLERIC_T1,
-					/obj/effect/proc_holder/spell/self/astratan_spear			= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/heal					= CLERIC_T2,
-					/obj/effect/proc_holder/spell/invoked/revive				= CLERIC_T3,
+	miracles = list(/datum/action/cooldown/spell/touch/orison					= CLERIC_ORI,
+					/datum/action/cooldown/spell/miracle/ignition/astrata		= CLERIC_T0,
+					/datum/action/cooldown/spell/miracle/heal					= CLERIC_T1,
+					/datum/action/cooldown/spell/miracle/bloodmiracle			= CLERIC_T1,
+					/datum/action/cooldown/spell/astrata/astrata_gaze			= CLERIC_T1,
+					/datum/action/cooldown/spell/projectile/sacred_flame		= CLERIC_T2,
+					/datum/action/cooldown/spell/miracle/fortify/astrata		= CLERIC_T2,
+					/datum/action/cooldown/spell/astrata/miracle_pyre			= CLERIC_T3,
+					/datum/action/cooldown/spell/astrata/firecloak				= CLERIC_T3,
+					/datum/action/cooldown/spell/miracle/anastasis/astrata		= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/immolation			= CLERIC_T4,
 	)
 	energy_color = COLOR_PATRON_ASTRATA
@@ -23,6 +25,13 @@
 		"I SERVE THE GLORY OF THE SUN!",
 	)
 	storyteller = /datum/storyteller/astrata
+	titles = list(
+		"Tyrant",
+		"Overtyrant",
+		"Sun", // should match any sort of Sun(x) title
+		"Aisata",
+		"Airishen" // lingyue
+	)
 
 // In daylight, church, cross, or ritual chalk.
 /datum/patron/divine/astrata/can_pray(mob/living/follower)
@@ -39,7 +48,10 @@
 	// Allows prayer during daytime if outside.
 	if(istype(get_area(follower), /area/rogue/outdoors) && (GLOB.tod == "day" || GLOB.tod == "dawn"))
 		return TRUE
-	to_chat(follower, span_danger("For Astrata to hear my prayer I must either be in her blessed daylight, within the church, or near a psycross.."))
+	// [SURREALIS-EDIT] - LORE
+	// to_chat(follower, span_danger("For Astrata to hear my prayer I must either be in her blessed daylight, within the church, or near a psycross..")) // SURREALIS-EDIT - ORIGINAL
+	to_chat(follower, span_danger("For Astrata to hear my prayer I must either be in her blessed daylight, within her Temple, or near a psycross.."))
+	// [/SURREALIS-EDIT]
 	return FALSE
 
 /datum/patron/divine/astrata/on_lesser_heal(
@@ -56,3 +68,7 @@
 	if(GLOB.tod == "day")
 		*conditional_buff = TRUE
 		*situational_bonus = 2
+
+	if(HAS_TRAIT(target, TRAIT_NOBLE)) //We heal her favorites more.
+		*conditional_buff = TRUE
+		*situational_bonus = 2.5

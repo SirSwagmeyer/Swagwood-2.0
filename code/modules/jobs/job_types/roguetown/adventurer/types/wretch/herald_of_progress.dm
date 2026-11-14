@@ -68,8 +68,8 @@
 		C.suppress_grants = TRUE
 		C.grant_miracles(H, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MINOR, start_maxed = TRUE)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/orison)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/lesser_heal)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/blood_heal)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/miracle/heal)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/miracle/bloodmiracle)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/tame_undead/miracle)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raise_undead_formation/sotto_voce)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/convert_heretic)

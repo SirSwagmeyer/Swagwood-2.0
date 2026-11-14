@@ -1,169 +1,69 @@
-/obj/effect/proc_holder/spell/invoked/ignition
-	name = "Ignition"
-	desc = "Ignite a flammable object at range."
-	overlay_icon = 'icons/mob/actions/astratamiracles.dmi'
-	action_icon = 'icons/mob/actions/astratamiracles.dmi'
-	overlay_state = "ignite"
-	releasedrain = 30
-	chargedrain = 0
-	chargetime = 0
-	range = 15
-	warnie = "sydwarning"
-	movement_interrupt = FALSE
-	chargedloop = null
-	sound = 'sound/magic/heal.ogg'
+/datum/action/cooldown/spell/astrata
+	background_icon = 'icons/mob/actions/astratamiracles.dmi'
+	button_icon = 'icons/mob/actions/astratamiracles.dmi'
+	spell_color = GLOW_COLOR_ASTRATA
+
+	attunement_school = null
+
+	primary_resource_type = SPELL_COST_DEVOTION
+
+	secondary_resource_type = SPELL_COST_STAMINA
+
+	ignore_armor_penalty = TRUE
+
+	has_visual_effects = FALSE
+	spell_impact_intensity = SPELL_IMPACT_NONE
+	associated_stat = null
 	associated_skill = /datum/skill/magic/holy
-	antimagic_allowed = TRUE
-	recharge_time = 5 SECONDS
-	miracle = TRUE
-	devotion_cost = 10
+	spell_tier = 0
 
-/obj/effect/proc_holder/spell/invoked/ignition/cast(list/targets, mob/user = usr)
-	. = ..()
-	// Spell interaction with ignitable objects (burn wooden things, light torches up)
-	if(isobj(targets[1]))
-		var/obj/O = targets[1]
-		if(O.fire_act())
-			user.visible_message("<font color='yellow'>[user] points at [O], igniting it with sacred flames!</font>")
-			return TRUE
-		else
-			to_chat(user, span_warning("You point at [O], but it fails to catch fire."))
-			return FALSE
-	revert_cast()
-	return FALSE
+	point_cost = 0
 
-/obj/effect/proc_holder/spell/invoked/revive
-	name = "Anastasis"
-	desc = "Focus Astratas energy though a stationary psycross, reviving the target from death."
-	overlay_icon = 'icons/mob/actions/astratamiracles.dmi'
-	action_icon = 'icons/mob/actions/astratamiracles.dmi'
-	overlay_state = "resurrect"
-	releasedrain = 90
-	chargedrain = 0
-	chargetime = 50
-	range = 1
-	warnie = "sydwarning"
-	no_early_release = TRUE
-	movement_interrupt = TRUE
-	chargedloop = /datum/looping_sound/invokeholy
-	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
-	sound = 'sound/magic/revive.ogg'
-	associated_skill = /datum/skill/magic/holy
-	antimagic_allowed = TRUE
-	recharge_time = 2 MINUTES
-	miracle = TRUE
-	devotion_cost = 80
-	/// Amount of PQ gained for reviving people
-	var/revive_pq = PQ_GAIN_REVIVE
+	required_items = list(/obj/item/clothing/neck/roguetown/psicross/astrata, /obj/item/clothing/neck/roguetown/psicross/silver/astrata, /obj/item/clothing/neck/roguetown/psicross/undivided, /obj/item/clothing/neck/roguetown/psicross/silver/undivided)
 
-/obj/effect/proc_holder/spell/invoked/revive/start_recharge()
-	var/old_recharge = recharge_time
-	// Because the cooldown for anastasis is so incredibly low, not having tech impacts them more heavily than other faiths
-	var/tech_resurrection_modifier = SSchimeric_tech.get_resurrection_multiplier()
+///////////////////////////////////////////////////
+// T0 - Ignition - Ignite a target or an object. //
+///////////////////////////////////////////////////
 
-	if(tech_resurrection_modifier > 1)
-		recharge_time = initial(recharge_time) * (tech_resurrection_modifier * 1.25)
-	else
-		recharge_time = initial(recharge_time)
-	if(charge_counter >= old_recharge && old_recharge > 0)
-		charge_counter = recharge_time
-	. = ..()
+/datum/action/cooldown/spell/miracle/ignition/astrata
+	background_icon = 'icons/mob/actions/astratamiracles.dmi'
+	button_icon = 'icons/mob/actions/astratamiracles.dmi'
+	spell_color = GLOW_COLOR_ASTRATA
+	glow_intensity = GLOW_INTENSITY_LOW
 
+	required_items = list(/obj/item/clothing/neck/roguetown/psicross/astrata, /obj/item/clothing/neck/roguetown/psicross/silver/astrata, /obj/item/clothing/neck/roguetown/psicross/undivided, /obj/item/clothing/neck/roguetown/psicross/silver/undivided)
 
-/obj/effect/proc_holder/spell/invoked/revive/cast(list/targets, mob/living/user)
-	..()
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// T1 - Astratan Gaze - Removes cone vision for a dynamic duration. Adds PERCEPTION based on holy skill and time of day. //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	if(!isliving(targets[1]))
-		revert_cast()
-		return FALSE
-	testing("revived1")
-	var/mob/living/target = targets[1]
-	//OV edit
-	if(istype(target, /mob/living/simple_animal/hostile/retaliate/rogue/ooze_blob/suffering))
-		target.revive()
-		return TRUE
-	//OV edit end
-	if(!target.check_revive(user))
-		revert_cast()
-		return FALSE
-	if(GLOB.tod == "night")
-		to_chat(user, span_warning("Let there be light."))
-	for(var/obj/structure/fluff/psycross/S in oview(5, user))
-		S.AOE_flash(user, range = 8)
-	if(target.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
-		target.visible_message(
-			span_danger("[target] is unmade by holy light!"),
-			span_userdanger("I'm unmade by holy light!")
-		)
-		target.gib()
-		return TRUE
-	var/mob/living/carbon/spirit/underworld_spirit = target.get_spirit()
-	//GET OVER HERE!
-	if(underworld_spirit)
-		var/mob/dead/observer/ghost = underworld_spirit.ghostize()
-		qdel(underworld_spirit)
-		ghost.mind.transfer_to(target, TRUE)
-	target.grab_ghost(force = TRUE) // even suicides
-	if(!target.mind.active)
-		to_chat(user, "[target] will not return from afterlife.")
-		revert_cast()
-		return FALSE
-	target.adjustOxyLoss(-target.getOxyLoss()) //Ye Olde CPR
-	if(!target.revive(full_heal = FALSE))
-		to_chat(user, span_warning("Nothing happens."))
-		revert_cast()
-		return FALSE
-	testing("revived2")
-	target.emote("breathgasp")
-	target.Jitter(100)
-	record_round_statistic(STATS_ASTRATA_REVIVALS)
-	target.update_body()
-	target.visible_message(span_notice("[target] is revived by holy light!"), span_green("I awake from the void."))
-	if(revive_pq && !HAS_TRAIT(target, TRAIT_IWASREVIVED) && user?.ckey)
-		adjust_playerquality(revive_pq, user.ckey)
-		ADD_TRAIT(target, TRAIT_IWASREVIVED, "[type]")
-	target.mind.remove_antag_datum(/datum/antagonist/zombie)
-	target.remove_status_effect(/datum/status_effect/debuff/rotted_zombie)	//Removes the rotted-zombie debuff if they have it - Failsafe for it.
-	target.apply_status_effect(/datum/status_effect/debuff/revived)	//Temp debuff on revive, your stats get hit temporarily. Doubly so if having rotted.
-	return TRUE
-
-/obj/effect/proc_holder/spell/invoked/revive/cast_check(skipcharge,mob/user = usr)
-	if(!..())
-		return FALSE
-	var/found = null
-	for(var/obj/structure/fluff/psycross/S in oview(5, user))
-		found = S
-	if(!found)
-		to_chat(user, span_warning("I need a holy cross."))
-		return FALSE
-	return TRUE
-
-//T0. Removes cone vision for a dynamic duration.
-/obj/effect/proc_holder/spell/self/astrata_gaze
+/datum/action/cooldown/spell/astrata/astrata_gaze
 	name = "Astratan Gaze"
 	desc = "Removes the limit on your vision, letting you see behind you for a time, lasts longer during the dae and gives a perception bonus to those skilled and holy arts."
-	overlay_icon = 'icons/mob/actions/astratamiracles.dmi'
-	action_icon = 'icons/mob/actions/astratamiracles.dmi'
-	overlay_state = "gaze"
-	releasedrain = 10
-	chargedrain = 0
-	chargetime = 0
-	chargedloop = /datum/looping_sound/invokeholy
+	fluff_desc = "The second gift to men, Her ability to discern evyl hiding in plain sight. Astrata's tireless gaze - a true boon in hands of mortals as well Her misbegotten children."
+	button_icon_state = "gaze"
 	sound = 'sound/magic/astrata_choir.ogg'
-	associated_skill = /datum/skill/magic/holy
-	antimagic_allowed = FALSE
-	invocations = list("Astrata show me true.")
-	invocation_type = "shout"
-	recharge_time = 120 SECONDS
-	devotion_cost = 30
-	miracle = TRUE
+	glow_intensity = 0
 
-/obj/effect/proc_holder/spell/self/astrata_gaze/cast(list/targets, mob/user)
-	if(!ishuman(user))
-		revert_cast()
-		return FALSE
-	var/mob/living/carbon/human/H = user
-	H.apply_status_effect(/datum/status_effect/buff/astrata_gaze, user.get_skill_level(associated_skill))
+	click_to_activate = FALSE
+
+	primary_resource_cost = SPELLCOST_MIRACLE
+
+	secondary_resource_cost = SPELLCOST_UTILITY_BUFF
+
+	invocations = list("Astrata show me true.")
+	invocation_type = INVOCATION_WHISPER
+
+	charge_required = FALSE
+	cooldown_time = 3 MINUTES
+
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC | SPELL_REQUIRES_HUMAN | SPELL_REQUIRES_SAME_Z
+
+/datum/action/cooldown/spell/astrata/astrata_gaze/cast(atom/cast_on)
+	. = ..()
+	var/mob/living/carbon/human/H = owner
+	var/skill_level = H.get_skill_level(associated_skill)
+	H.apply_status_effect(/datum/status_effect/buff/astrata_gaze, skill_level)
 	return TRUE
 
 /atom/movable/screen/alert/status_effect/buff/astrata_gaze
@@ -174,26 +74,43 @@
 /datum/status_effect/buff/astrata_gaze
 	id = "astratagaze"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/astrata_gaze
+	duration = 40 SECONDS
+	var/skill_level = 0
+	status_type = STATUS_EFFECT_REPLACE
+
+/datum/status_effect/buff/astrata_gaze/on_creation(mob/living/new_owner, slevel)
+	// Only store skill level here
+	skill_level = slevel
+	.=..()
+
+/datum/status_effect/buff/astrata_gaze/on_apply()
+	// Reset base values because the miracle can
+	// now actually be recast at high enough skill and during day time
+	// This is a safeguard because buff code makes my head hurt
+	var/per_bonus = 0
 	duration = 20 SECONDS
 
-/datum/status_effect/buff/astrata_gaze/on_apply(assocskill)
+	if(skill_level > SKILL_LEVEL_NOVICE)
+		per_bonus++
+
+	if(GLOB.tod == "dawn" || GLOB.tod == "day" || GLOB.tod == "dusk")
+		per_bonus++
+		duration *= 2
+
+	duration *= skill_level
+
+	if(per_bonus)
+		effectedstats = list(STATKEY_PER = per_bonus)
+
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.viewcone_override = TRUE
 		H.hide_cone()
 		H.update_cone_show()
-	var/per_bonus = 0
-	if(assocskill)
-		if(assocskill > SKILL_LEVEL_NOVICE)
-			per_bonus++
-		duration *= assocskill
-	if(GLOB.tod == "day" || GLOB.tod == "dawn")
-		per_bonus++
-		duration *= 2
-	if(per_bonus > 0)
-		effectedstats = list(STATKEY_PER = per_bonus)
+
 	to_chat(owner, span_info("She shines through me! I can perceive all clear as dae!"))
-	. = ..()
+
+	return ..()
 
 /datum/status_effect/buff/astrata_gaze/on_remove()
 	. = ..()
@@ -202,6 +119,294 @@
 		H.viewcone_override = FALSE
 		H.hide_cone()
 		H.update_cone_show()
+
+//////////////////////////////////////////////////////////
+// T2 - Sacred Flame - Deals damage and ignites target. //
+//////////////////////////////////////////////////////////
+
+/datum/action/cooldown/spell/projectile/sacred_flame
+	name = "Sacred Flame"
+	desc = "Emit a bolt of holy fire that sunders a target, setting them on fire and slowing them down for 6 seconds. \
+	The CC effects cannot be reapplied to the same target within 15 seconds."
+	fluff_desc = "The fourth gift to men, sliver of Astrata's fury against the horrors of Psydonia, bringing evyl to its knees at hands of Her devoted."
+	background_icon = 'icons/mob/actions/astratamiracles.dmi'
+	button_icon = 'icons/mob/actions/astratamiracles.dmi'
+	button_icon_state = "bolt"
+	sound = 'sound/magic/lightning.ogg'
+	spell_color = GLOW_COLOR_ASTRATA
+	glow_intensity = GLOW_INTENSITY_MEDIUM
+	attunement_school = null
+
+	projectile_type = /obj/projectile/magic/sacred_flame
+	cast_range = SPELL_RANGE_PROJECTILE
+
+	primary_resource_type = SPELL_COST_DEVOTION
+	primary_resource_cost = SPELLCOST_MIRACLE
+
+	secondary_resource_type = SPELL_COST_STAMINA
+	secondary_resource_cost = SPELLCOST_MAJOR_PROJECTILE
+
+	invocations = list("Judgement of the Sun!")
+	invocation_type = INVOCATION_SHOUT
+
+	ignore_armor_penalty = TRUE
+	charge_required = TRUE
+	charge_time = CHARGETIME_MAJOR
+	hold_drain = 1
+	charge_slowdown = CHARGING_SLOWDOWN_MEDIUM
+	charge_swingdelay_type = SWINGDELAY_CANCEL
+	charge_sound = 'sound/magic/holycharging.ogg'
+	cooldown_time = 30 SECONDS
+
+	associated_stat = null
+	associated_skill = /datum/skill/magic/holy
+	spell_tier = 0
+
+	point_cost = 0
+
+	spell_impact_intensity = SPELL_IMPACT_MEDIUM
+
+	spell_flags = SPELL_PSYDON
+	required_items = list(/obj/item/clothing/neck/roguetown/psicross/astrata, /obj/item/clothing/neck/roguetown/psicross/silver/astrata, /obj/item/clothing/neck/roguetown/psicross/undivided, /obj/item/clothing/neck/roguetown/psicross/silver/undivided)
+
+/obj/projectile/magic/sacred_flame
+	name = "bolt of holy fire"
+	tracer_type = /obj/effect/projectile/tracer/solar_beam
+	muzzle_type = null
+	impact_type = null
+	hitscan = TRUE
+	movement_type = UNSTOPPABLE
+	guard_deflectable = TRUE
+	expose_caster_on_deflect = TRUE
+	light_color = "#a98107"
+	damage = 80
+	damage_type = BURN
+	nodamage = FALSE
+	speed = 0.3
+	flag = "fire"
+	light_outer_range = 7
+
+/obj/projectile/magic/sacred_flame/on_hit(target, blocked = FALSE)
+	. = ..()
+	if(ismob(target))
+		var/mob/M = target
+		if(M.anti_magic_check())
+			visible_message(span_warning("[src] fizzles on contact with [target]!"))
+			playsound(get_turf(target), 'sound/magic/magic_nulled.ogg', 100)
+			qdel(src)
+			return BULLET_ACT_BLOCK
+		if(isliving(target))
+			var/mob/living/L = target
+			if(out_of_effective_range())
+				return
+			if(blocked < 100)
+				if(HAS_TRAIT(L, TRAIT_SILVER_WEAK))
+					L.adjust_fire_stacks(4, /datum/status_effect/fire_handler/fire_stacks/sunder)
+					L.Immobilize(0.5 SECONDS)
+					L.ignite_mob()
+				else
+					L.adjust_fire_stacks(2)
+					L.Immobilize(0.5 SECONDS)
+					L.ignite_mob()
+	else if(isatom(target))
+		var/atom/A = target
+		A.fire_act()
+	qdel(src)
+
+///////////////////////////
+// T2 - Astratan Fortify //
+///////////////////////////
+
+/datum/action/cooldown/spell/miracle/fortify/astrata
+	background_icon = 'icons/mob/actions/astratamiracles.dmi'
+	button_icon = 'icons/mob/actions/astratamiracles.dmi'
+
+////////////////////////////////////////////////////////////////
+// T3 - Solar Eruption - Finisher for the rest of the spells. //
+////////////////////////////////////////////////////////////////
+
+/datum/action/cooldown/spell/astrata/miracle_pyre
+	name = "Solar Pyre"
+	desc = "Creates a pyre dedicated to Astrata, lasts 30 minutes."
+	button_icon_state = "pyre"
+	sound = 'sound/magic/astrata_choir.ogg'
+	spell_color = GLOW_COLOR_ASTRATA
+	glow_intensity = GLOW_INTENSITY_LOW
+
+	click_to_activate = TRUE
+	self_cast_possible = FALSE
+	cast_range = 3
+
+	primary_resource_cost = SPELLCOST_MIRACLE_MAJOR
+	secondary_resource_cost = SPELLCOST_MIRACLE_MAJOR
+
+	invocations = list("Let Her radiance guide us forward.")
+	invocation_type = INVOCATION_SHOUT
+
+	charge_required = TRUE
+	charge_time = 3 SECONDS
+	hold_drain = 1
+	charge_slowdown = CHARGING_SLOWDOWN_MEDIUM
+	charge_sound = 'sound/magic/holycharging.ogg'
+	cooldown_time = 10 MINUTES
+
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC | SPELL_REQUIRES_HUMAN | SPELL_REQUIRES_NO_MOVE | SPELL_REQUIRES_SAME_Z
+
+	var/fire_type = /obj/machinery/light/rogue/campfire/miracle_pyre
+	var/static/list/turf_blacklist = list(
+		/turf/open/water,
+		/turf/open/transparent,
+		/turf/closed/transparent,
+		)
+
+/datum/action/cooldown/spell/astrata/miracle_pyre/cast(atom/cast_on)
+	. = ..()
+	var/turf/target = get_turf(cast_on)
+
+	if(!target || !target.Enter(owner) || is_type_in_list(target, turf_blacklist))
+		to_chat(owner, span_warning("This turf can't be on fiyaaaah! (It's blocked sire.)"))
+		return FALSE
+
+	new /obj/machinery/light/rogue/campfire/miracle_pyre(target)
+
+	return TRUE
+
+/obj/machinery/light/rogue/campfire/miracle_pyre
+	name = "astrata's pyre"
+	icon = 'icons/roguetown/misc/tallstructure.dmi'
+	icon_state = "pyre_astrata1"
+	base_state = "pyre_astrata"
+	density = FALSE
+	layer = 2.8
+	brightness = 10
+	fueluse = 15 MINUTES
+	color = GLOW_COLOR_ASTRATA
+	bulb_colour = GLOW_COLOR_ASTRATA
+	max_integrity = 150
+	healing_range = 2
+	var/lifespan = 15 MINUTES
+
+/obj/machinery/light/rogue/campfire/miracle_pyre/process()
+	..()
+	if(isopenturf(loc))
+		var/turf/open/O = loc
+		if(IS_WET_OPEN_TURF(O))
+			extinguish()
+
+	if(on)
+		var/list/hearers_in_range = get_hearers_in_LOS(healing_range, src, RECURSIVE_CONTENTS_CLIENT_MOBS)
+		for(var/mob/living/carbon/human/human in hearers_in_range)
+			var/distance = get_dist(src, human)
+			if(distance > healing_range || HAS_TRAIT(human, TRAIT_IRONMAN))
+				continue
+			if(istype(human.patron, /datum/patron/divine))
+				if(!human.has_status_effect(/datum/status_effect/buff/pyre))
+					to_chat(human, span_info("Her warmth sutures my mangled body."))
+				human.apply_status_effect(/datum/status_effect/buff/pyre)
+				human.add_stress(/datum/stressevent/astrata_pyre)
+
+/obj/machinery/light/rogue/campfire/miracle_pyre/Initialize(mapload)
+	. = ..()
+	if(lifespan)
+		QDEL_IN(src, lifespan) //delete after it runs out
+
+/obj/machinery/light/rogue/campfire/miracle_pyre/onkick(mob/user)
+	var/mob/living/L = user
+	L.visible_message(span_info("[L] kicks \the [src], the divine fire dissipating."))
+	burn_out()
+	qdel(src)
+
+/atom/movable/screen/alert/status_effect/buff/healing/pyre
+	name = "Radiant Pyre"
+	desc = "I can rest under Her watchful gaze."
+	icon_state = "astrata_pyre"
+
+/datum/status_effect/buff/pyre
+	id = "astratan_pyre"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/healing/pyre
+	examine_text = "SUBJECTPRONOUN is basking in Her light."
+	var/healing_on_tick_pyre = 3
+	duration = 10 SECONDS
+
+/datum/status_effect/buff/pyre/tick()
+	if(!owner.cmode)
+		healing_on_tick_pyre *= 2
+		return
+	if(HAS_TRAIT(owner, TRAIT_IRONMAN))
+		return
+	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue/campfire(get_turf(owner))
+	H.color = GLOW_COLOR_ASTRATA
+	owner.adjust_blood_volume(healing_on_tick_pyre)
+	var/list/wCount = owner.get_wounds()
+	if(length(wCount))
+		owner.heal_wounds(healing_on_tick_pyre, list(/datum/wound/slash, /datum/wound/puncture, /datum/wound/bite, /datum/wound/bruise, /datum/wound/dynamic, /datum/wound/dislocation))
+		owner.update_damage_overlays()
+	owner.adjustBruteLoss(-healing_on_tick_pyre, 0)
+	owner.adjustFireLoss(-healing_on_tick_pyre, 0)
+	owner.adjustOxyLoss(-healing_on_tick_pyre, 0)
+	owner.adjustToxLoss(-healing_on_tick_pyre, 0)
+	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -healing_on_tick_pyre)
+	owner.adjustCloneLoss(-healing_on_tick_pyre, 0)
+	owner.adjust_bodytemperature(8)
+
+///////////////////////////////////////////////////////////////////////////
+// T3 - Asbestine Cloak - Grant fire resistance to people around caster. //
+///////////////////////////////////////////////////////////////////////////
+
+/datum/action/cooldown/spell/astrata/firecloak
+	name = "Asbestine Cloak"
+	desc = "Cover yourself and adjacent targets in fire-resistant cloak."
+	fluff_desc = "The third gift to men, for the devout are granted the right to witness Her glorious radiance with their own eyes without burning up into pile of ash."
+	button_icon_state = "cloak"
+	sound = 'sound/magic/haste.ogg'
+	glow_intensity = GLOW_INTENSITY_LOW
+
+	click_to_activate = TRUE
+	self_cast_possible = TRUE
+
+	primary_resource_type = SPELL_COST_STAMINA
+	primary_resource_cost = SPELLCOST_STAT_BUFF
+
+	invocations = list("Bask in Her radiance.")
+	invocation_type = INVOCATION_WHISPER
+
+	charge_required = TRUE
+	charge_time = 1 SECONDS
+	hold_drain = 0
+	charge_slowdown = CHARGING_SLOWDOWN_NONE
+	charge_sound = 'sound/magic/holycharging.ogg'
+	cooldown_time = 1.5 MINUTES
+
+	associated_skill = null
+	spell_tier = 0
+
+	point_cost = 0
+
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC | SPELL_REQUIRES_HUMAN | SPELL_REQUIRES_SAME_Z
+
+/datum/action/cooldown/spell/astrata/firecloak/cast(atom/cast_on)
+	. = ..()
+	var/mob/living/carbon/human/H = owner
+	if(!istype(H))
+		return FALSE
+
+	H.visible_message("[H] mutters an incantation and a dim pulse of light radiates out from them.")
+	for(var/mob/living/L in range(1, H))
+		L.apply_status_effect(/datum/status_effect/buff/dragonhide/astrata)
+
+	return TRUE
+
+//////////////////////////////
+// T3 - Anastasis - Revive. //
+//////////////////////////////
+
+/datum/action/cooldown/spell/miracle/anastasis/astrata
+	name = "Sunblessed Anastasis"
+	desc = "Resurrect a person that is free of rot and decay, deadites (such as lyckers / skeletons) instead explode when it is attempted."
+	fluff_desc = "The greatest feat any priest can manage is reversion of death, a true rebirth unlike the perversion Necromancers aspire to."
+	background_icon = 'icons/mob/actions/astratamiracles.dmi'
+	button_icon = 'icons/mob/actions/astratamiracles.dmi'
+	spell_color = GLOW_COLOR_ASTRATA
 
 // =====================
 // Immolation Component
@@ -254,12 +459,15 @@
 	// Set up processing and expiration
 	START_PROCESSING(SSprocessing, src)
 	RegisterSignal(parent, COMSIG_LIVING_MIRACLE_HEAL_APPLY, PROC_REF(on_heal))
-	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_deletion))
+	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(on_deletion))
 	addtimer(CALLBACK(src, PROC_REF(remove_immolation)), duration)
 
 	// Apply visual effect
 	var/mob/living/L = parent
-	L.apply_status_effect(/datum/status_effect/immolation, immolate)
+	if(parent == caster)
+		L.apply_status_effect(/datum/status_effect/immolation, FALSE)
+	else
+		L.apply_status_effect(/datum/status_effect/immolation, TRUE)
 	return ..()
 
 /datum/component/immolation/proc/on_deletion()
@@ -348,13 +556,13 @@
 		L.remove_status_effect(/datum/status_effect/immolation)
 		UnregisterSignal(L, list(
 			COMSIG_LIVING_MIRACLE_HEAL_APPLY,
-			COMSIG_QDELETING
+			COMSIG_PARENT_QDELETING
 		))
 
 	if(partner)
 		partner.remove_status_effect(/datum/status_effect/immolation)
 		var/datum/component/immolation/other = partner.GetComponent(/datum/component/immolation)
-		if(other && other != src)
+		if(other)
 			other.partner = null
 			qdel(other)
 
@@ -367,13 +575,13 @@
 // =====================
 /obj/effect/proc_holder/spell/invoked/immolation
 	name = "Immolation"
-	desc = "Ignite a target in holy flames, burning those that surround them. Fire burns brighter within devout Astratans."
-	overlay_icon = 'icons/mob/actions/astratamiracles.dmi'
+	desc = "Ignite a target in holy flames, burning those that surround them. The fire burns brighter within devout Astratans."
 	action_icon = 'icons/mob/actions/astratamiracles.dmi'
+	overlay_icon = 'icons/mob/actions/astratamiracles.dmi'
 	overlay_state = "immolation"
 	range = 2
 	chargetime = 0.5 SECONDS
-	invocations = list("By sacred fire, be cleansed!")
+	invocations = list("The Sun cleanses!")
 	sound = 'sound/magic/fireball.ogg'
 	recharge_time = 600 SECONDS
 	miracle = TRUE
@@ -389,9 +597,13 @@
 		revert_cast()
 		return FALSE
 
-	if(!istype(target, /mob/living/carbon))
+	if(!istype(target, /mob/living/carbon) || target == user)
 		revert_cast()
 		return FALSE
+
+	if(spell_guard_check(target, TRUE))
+		target.visible_message(span_warning("[target] resists the immolation!"))
+		return TRUE
 
 	// Channeling requirement
 	user.visible_message(span_danger("[user] begins lighting [target] ablaze with strange, divine fire!"))
@@ -405,12 +617,11 @@
 	var/is_astrata = (istype(target.patron, /datum/patron/divine/astrata))
 
 	// Apply component
-	if(target != user)
-		user.AddComponent(/datum/component/immolation, target, user, holy_skill, is_astrata)
+	user.AddComponent(/datum/component/immolation, target, user, holy_skill, is_astrata)
 	target.AddComponent(/datum/component/immolation/partner, target, user, holy_skill, is_astrata)
 
 	// Visual feedback
-	user.visible_message(span_notice("Holy flames erupt from [user]'s hands and engulf [target]!"))
+	user.visible_message(span_astrata("Holy flames erupt from [user]'s hands and engulf [target]!"))
 	if(!is_astrata)
 		target.visible_message(span_danger("[target] lights ablaze with sacred fire. Fire cutting like a blade in a small area around them."))
 	else
@@ -466,148 +677,3 @@
 			owner.remove_overlay(FIRE_LAYER)
 
 #undef IMMOLATION_FILTER
-
-//Summoning the spear.
-/obj/effect/proc_holder/spell/self/astratan_spear
-	name = "Summon Spear"
-	overlay_icon = 'icons/mob/actions/astratamiracles.dmi'
-	action_icon = 'icons/mob/actions/astratamiracles.dmi'
-	overlay_state = "spear"
-	desc = "An ancient miracle, honed by those who'd served as Astrata's martial arm in the second era. \
-	With such, you may beseech Astrata for a mote of Her power."
-	clothes_req = FALSE
-	sound = 'sound/magic/blade_burst.ogg'
-	invocations = list("Lady of Order, guide my hand!")
-	invocation_type = "shout"
-	recharge_time = 30 SECONDS
-	chargedrain = 0
-	chargetime = 0
-	releasedrain = 5
-	miracle = TRUE
-	devotion_cost = 50//See below as to why. Slowdown and funny damage.
-	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
-	associated_skill = /datum/skill/magic/holy
-
-/obj/effect/proc_holder/spell/self/astratan_spear/cast(list/targets, mob/living/user = usr)
-	dispel_conjured_item()
-	var/obj/item/rogueweapon/R = new /obj/item/rogueweapon/light_spear(user.drop_location())
-	user.put_in_hands(R)
-	set_conjured_item(R)
-	return TRUE
-
-//The spear itself. A summoned weapon you charge(throw for now) for an AoE effect.
-/obj/item/rogueweapon/light_spear
-	name = "lightning spear"
-	desc = "A spear of light, pulled from Her domain. Throw far. Strike true."
-	icon_state = "astratan_spear"//Martyr sword without the hilt, for now. Temp.
-	icon = 'icons/roguetown/weapons/64.dmi'
-	w_class = WEIGHT_CLASS_GIGANTIC
-	item_flags = SLOWS_WHILE_IN_HAND
-	slowdown = 2
-	possible_item_intents = list(INTENT_GENERIC)
-	embedding = list("embedded_pain_multiplier" = 0, "embed_chance" = 0, "embedded_fall_chance" = 0)
-	mob_throw_hit_sound = 'sound/magic/lightning.ogg'
-	throwforce = 15//The damage does not typically come from the impact. This is here as a fallback.
-	thrown_bclass = BCLASS_PIERCE//As above.
-	thrown_damage_flag = "piercing"//Let it have some fun against boots, gloves, clothing, etc. C'mon...
-	throw_speed = 2
-	bigboy = 1
-	var/step_delay = 10//Delay for the strike. Adjust sleep in the damage proc if changing.
-	var/strike_damage = 25//Target damage. 25 on center, 19 on outer.
-
-/obj/item/rogueweapon/light_spear/attack_self()
-	qdel(src)
-
-/obj/item/rogueweapon/light_spear/afterattack()
-	qdel(src)
-
-/obj/item/rogueweapon/light_spear/attack_hand()
-	qdel(src)
-
-/obj/item/rogueweapon/light_spear/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	..()
-	//Make it look worse than it is, initially. For show. As long as they don't stick around...
-	if(iscarbon(hit_atom))
-		var/mob/living/carbon/human/H = hit_atom
-		H.electrocute_act(1, src, 1, SHOCK_NOSTUN)
-
-	var/turf/centerpoint = get_turf(hit_atom)
-	src.alpha = 0//Hide it on impact. Hee hoo.
-
-	new /obj/effect/temp_visual/trap/thunderstrike(centerpoint)
-	addtimer(CALLBACK(src, PROC_REF(astratan_spear_damage), centerpoint, 1), wait = step_delay)
-
-	for(var/turf/effect_layer_one in range(1, centerpoint))
-		if(!(effect_layer_one in view(centerpoint)))
-			continue
-		if(get_dist(centerpoint, effect_layer_one) != 1)
-			continue
-		new /obj/effect/temp_visual/trap/thunderstrike/layer_one(effect_layer_one)
-		addtimer(CALLBACK(src, PROC_REF(astratan_spear_damage), effect_layer_one, 0.75), wait = step_delay)
-
-	return TRUE
-
-/obj/item/rogueweapon/light_spear/proc/astratan_spear_damage(turf/effect_layer, damage_mod)
-	new /obj/effect/temp_visual/thunderstrike_actual(effect_layer)
-	playsound(effect_layer, 'sound/magic/lightning.ogg', 50)
-	for(var/mob/living/L in effect_layer.contents)
-		if(L.mob_biotypes & MOB_UNDEAD)
-			strike_damage += 15
-		L.electrocute_act(strike_damage * damage_mod, src, 1, SHOCK_NOSTUN)
-		L.apply_status_effect(/datum/status_effect/buff/lightningstruck, 3 SECONDS)
-	sleep(10)
-	qdel(src)
-
-/obj/projectile/magic/astratablast
-	damage = 25
-	name = "lance of holy fire"
-	nodamage = FALSE
-	damage_type = BURN
-	speed = 0.3
-	muzzle_type = null
-	impact_type = null
-	hitscan = TRUE
-	flag = "fire"
-	light_color = "#a98107"
-	light_outer_range = 7
-	tracer_type = /obj/effect/projectile/tracer/solar_beam
-	var/fuck_that_guy_multiplier = 1.6//On par with divine blast against undead, more-or-less.
-	var/biotype_we_look_for = MOB_UNDEAD
-
-/obj/projectile/magic/astratablast/on_hit(target)
-	. = ..()
-	if(ismob(target))
-		var/mob/living/M = target
-		if(M.anti_magic_check())
-			visible_message(span_warning("[src] fizzles on contact with [target]!"))
-			playsound(get_turf(target), 'sound/magic/magic_nulled.ogg', 100)
-			qdel(src)
-			return BULLET_ACT_BLOCK
-		if(M.mob_biotypes & biotype_we_look_for || istype(M, /mob/living/simple_animal/hostile/rogue/skeleton))
-			damage *= fuck_that_guy_multiplier
-			M.adjust_fire_stacks(10)
-			visible_message(span_warning("[target] erupts in flame upon being struck by [src]!"))
-			M.ignite_mob()
-		else
-			M.adjust_fire_stacks(4)
-			visible_message(span_warning("[src] ignites [target]!"))
-			M.ignite_mob()
-	return FALSE
-
-/obj/effect/temp_visual/trap/thunderstrike
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "trap"
-	light_outer_range = 2
-	duration = 4
-	layer = MASSIVE_OBJ_LAYER
-
-/obj/effect/temp_visual/trap/thunderstrike/layer_one
-	duration = 8
-
-/obj/effect/temp_visual/trap/thunderstrike/layer_two
-	duration = 12
-
-/obj/effect/temp_visual/trap/thunderstrike/Initialize(mapload, duration_override)
-	if(duration_override)
-		duration = duration_override
-	. = ..() // Call parent AFTER setting duration

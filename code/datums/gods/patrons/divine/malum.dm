@@ -8,8 +8,8 @@
 	mob_traits = list(TRAIT_FORGEBLESSED, TRAIT_BETTER_SLEEP)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/malum_flame_rogue 	= CLERIC_T0,
-					/obj/effect/proc_holder/spell/invoked/lesser_heal 			= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/blood_heal			= CLERIC_T1,
+					/datum/action/cooldown/spell/miracle/heal 			= CLERIC_T1,
+					/datum/action/cooldown/spell/miracle/bloodmiracle			= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/vigorousexchange		= CLERIC_T1,
 					/datum/action/cooldown/spell/arcyne_forge/miracle			= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/heatmetal				= CLERIC_T2,

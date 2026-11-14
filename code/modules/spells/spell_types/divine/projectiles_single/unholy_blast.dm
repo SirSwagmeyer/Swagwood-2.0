@@ -8,7 +8,7 @@
 
 /obj/projectile/energy/unholyblast
 	name = "Unholy Blast"
-	icon_state = "divine_blast"
+	icon_state = "dblast"
 	damage = 20 // wont do much to a heretical worshipper
 	woundclass = BCLASS_CUT // I REALLY wanted to do cut
 	nodamage = FALSE

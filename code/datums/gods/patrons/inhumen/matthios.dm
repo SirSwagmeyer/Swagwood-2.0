@@ -10,8 +10,8 @@
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison					= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/appraise						= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/transact						= CLERIC_T0,
-					/obj/effect/proc_holder/spell/invoked/lesser_heal 					= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/blood_heal					= CLERIC_T1,
+					/datum/action/cooldown/spell/miracle/heal 					= CLERIC_T1,
+					/datum/action/cooldown/spell/miracle/bloodmiracle					= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/equalize						= CLERIC_T2,
 					/obj/effect/proc_holder/spell/invoked/churnwealthy					= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/resurrect/matthios			= CLERIC_T3, // Counterpart to anastasis

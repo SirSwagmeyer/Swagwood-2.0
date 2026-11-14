@@ -6,7 +6,7 @@
 	clothes_req = FALSE
 	range = 12
 	projectile_type = /obj/projectile/energy/divineblast
-	overlay_state = "divine_blast"
+	overlay_state = "dblast"
 	sound = list('sound/magic/vlightning.ogg')
 	active = FALSE
 	releasedrain = 20

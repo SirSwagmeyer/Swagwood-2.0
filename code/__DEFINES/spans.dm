@@ -178,3 +178,5 @@
 /// * SPAN_LINKIFY doesn't work here.
 #define SPAN_TOOLTIP_DANGEROUS_HTML(tip, str) ("<span data-component=\"TooltipHTML\" data-html=\"[html_encode(tip)]\" class=\"tooltip\">[str]</span>")
 #define span_combatsecondarybp(str) ("<span class='combatsecondarybodypart'>" + (str) + "</span>")
+
+#define span_astrata(str) ("<span class='astrata'>" + (str) + "</span>")

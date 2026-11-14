@@ -8,8 +8,8 @@
 	mob_traits = list(TRAIT_SHARPER_BLADES)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/tug_of_war			= CLERIC_T0,
-					/obj/effect/proc_holder/spell/invoked/lesser_heal 			= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/blood_heal			= CLERIC_T1,
+					/datum/action/cooldown/spell/miracle/heal 			= CLERIC_T1,
+					/datum/action/cooldown/spell/miracle/bloodmiracle			= CLERIC_T1,
 					/obj/effect/proc_holder/spell/self/divine_strike			= CLERIC_T1,
 					/obj/effect/proc_holder/spell/self/call_to_arms				= CLERIC_T2,
 					/obj/effect/proc_holder/spell/invoked/challenge				= CLERIC_T2,

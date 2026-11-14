@@ -29,7 +29,7 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 	whitelist_req = FALSE
 	cmode_music = 'sound/music/cmode/church/combat_astrata.ogg'
 
-	spells = list(/obj/effect/proc_holder/spell/invoked/cure_rot, /obj/effect/proc_holder/spell/self/convertrole/templar, /obj/effect/proc_holder/spell/self/convertrole/monk, /obj/effect/proc_holder/spell/invoked/projectile/divineblast, /obj/effect/proc_holder/spell/invoked/wound_heal, /obj/effect/proc_holder/spell/invoked/takeapprentice)
+	spells = list(/obj/effect/proc_holder/spell/invoked/cure_rot, /obj/effect/proc_holder/spell/self/convertrole/templar, /obj/effect/proc_holder/spell/self/convertrole/monk, /obj/effect/proc_holder/spell/invoked/projectile/divineblast, /datum/action/cooldown/spell/miracle/intervention, /obj/effect/proc_holder/spell/invoked/takeapprentice)
 	outfit = /datum/outfit/job/roguetown/priest
 	display_order = JDO_PRIEST
 	give_bank_account = 115
@@ -211,8 +211,8 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/convertrole/monk, H)
 	if(!H.mind.has_spell(/obj/effect/proc_holder/spell/invoked/projectile/divineblast))
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast, H)
-	if(!H.mind.has_spell(/obj/effect/proc_holder/spell/invoked/wound_heal))
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/wound_heal, H)
+	if(!H.mind.has_spell(/datum/action/cooldown/spell/miracle/intervention))
+		H.mind.AddSpell(new /datum/action/cooldown/spell/miracle/intervention, H)
 	if(!H.mind.has_spell(/obj/effect/proc_holder/spell/invoked/takeapprentice))
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/takeapprentice, H)
 	to_chat(H, span_notice("I embrace the radical path."))
