@@ -11,6 +11,16 @@
 	cost = 40 // Base sellprice of 25
 	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy)
 
+/datum/supply_pack/rogue/light_armor/paddedchausses
+	name = "Chausses, Padded"
+	cost = 18
+	contains = list(/obj/item/clothing/under/roguetown/tights/clothlegs)
+
+/datum/supply_pack/rogue/light_armor/paddedmittens
+	name = "Mittens, Padded"
+	cost = 15
+	contains = list(/obj/item/clothing/gloves/roguetown/cloth)
+
 /datum/supply_pack/rogue/light_armor/leather_gorget
 	name = "Leather Gorget"
 	cost = 20 // Base sellprice of 10

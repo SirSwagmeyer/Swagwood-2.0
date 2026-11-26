@@ -110,6 +110,13 @@
 					/obj/item/clothing/under/roguetown/tights/black,
 				)
 
+/datum/supply_pack/rogue/wardrobe/pants/clothhosen
+	name = "Cloth Hosen"
+	cost = 20
+	contains = list(
+					/obj/item/clothing/under/roguetown/tights/hose
+				)
+
 /datum/supply_pack/rogue/wardrobe/shoes/noble
 	name = "Noble Boots"
 	cost = 30

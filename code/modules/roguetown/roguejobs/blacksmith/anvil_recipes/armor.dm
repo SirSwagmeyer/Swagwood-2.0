@@ -461,9 +461,22 @@
 	created_item = /obj/item/clothing/neck/roguetown/chaincoif/iron
 	display_category = ITEM_CAT_ARMOR_NECK
 
+/datum/anvil_recipe/armor/iron/fullchaincoif
+	name = "Full Chain Coif, Iron"
+	req_bar = /obj/item/ingot/iron
+	created_item = /obj/item/clothing/neck/roguetown/chaincoif/iron/full
+	display_category = ITEM_CAT_ARMOR_NECK
+
 /datum/anvil_recipe/armor/iron/gorget
 	name = "Gorget, Iron"
 	created_item = /obj/item/clothing/neck/roguetown/gorget
+	display_category = ITEM_CAT_ARMOR_NECK
+
+/datum/anvil_recipe/armor/iron/aventail
+	name = "Aventail, Iron (+1 Iron)"
+	req_bar = /obj/item/ingot/iron
+	additional_items = list(/obj/item/ingot/iron)
+	created_item = /obj/item/clothing/neck/roguetown/gorget/aventail/iron
 	display_category = ITEM_CAT_ARMOR_NECK
 
 /datum/anvil_recipe/armor/iron/bevor
@@ -517,6 +530,12 @@
 /datum/anvil_recipe/armor/iron/chainleg
 	name = "Chain Chausses, Iron"
 	created_item = /obj/item/clothing/under/roguetown/chainlegs/iron
+	display_category = ITEM_CAT_ARMOR_LEGS
+
+/datum/anvil_recipe/armor/iron/chainhose
+	name = "Chain Hoses, Iron"
+	req_bar = /obj/item/ingot/iron
+	created_item = /obj/item/clothing/under/roguetown/chainlegs/iron/hose
 	display_category = ITEM_CAT_ARMOR_LEGS
 
 /datum/anvil_recipe/armor/iron/chainleg/kilt
@@ -781,6 +800,12 @@
 /datum/anvil_recipe/armor/steel/chainlegs
 	name = "Chain Chausses, Steel"
 	created_item = /obj/item/clothing/under/roguetown/chainlegs
+	display_category = ITEM_CAT_ARMOR_LEGS
+
+/datum/anvil_recipe/armor/steel/chainhose
+	name = "Chain Hoses, Steel"
+	req_bar = /obj/item/ingot/steel
+	created_item = /obj/item/clothing/under/roguetown/chainlegs/hose
 	display_category = ITEM_CAT_ARMOR_LEGS
 
 /datum/anvil_recipe/armor/steel/chainlegs/kilt

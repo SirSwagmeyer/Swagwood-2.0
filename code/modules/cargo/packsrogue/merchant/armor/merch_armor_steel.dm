@@ -96,6 +96,11 @@
 	cost = 50 // 1 Steel
 	contains = list(/obj/item/clothing/under/roguetown/chainlegs)
 
+/datum/supply_pack/rogue/armor_steel/chainhose_steel
+	name = "Hosen, Chain"
+	cost = 50 // 1 Steel
+	contains = list(/obj/item/clothing/under/roguetown/chainlegs/hose)
+
 /datum/supply_pack/rogue/armor_steel/platelegs
 	name = "Chausses, Plate"
 	cost = 90 // 2 Steel
